@@ -1,4 +1,18 @@
 - commits:
+    - subject: "CI: Update flowzone config"
+      hash: 19366af35761b4d965d898aa5fe6beaa765c521d
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.1.1
+  title: ""
+  date: 2022-09-22T06:26:57.198Z
+- commits:
     - subject: Init codebase with echo function
       hash: 4c4c2f8f01dbb829c44683d2317b31714de4e22c
       body: ""
