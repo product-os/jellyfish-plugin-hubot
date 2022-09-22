@@ -46,7 +46,9 @@
   "license": "AGPL-3.0",
   "dependencies": {
     "@balena/jellyfish-worker": "^33.5.0",
-    "autumndb": "^22.2.73"
+    "autumndb": "^22.2.73",
+    "chrono-node": "^2.4.1",
+    "moment-timezone": "^0.5.37"
   },
   "devDependencies": {
     "@balena/lint": "^6.2.0",
