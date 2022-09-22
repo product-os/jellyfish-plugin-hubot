@@ -1,9 +1,9 @@
 import type { TriggeredActionContractDefinition } from '@balena/jellyfish-worker';
 
-export const triggeredActionHubotEcho: TriggeredActionContractDefinition = {
-	slug: 'triggered-action-hubot-echo',
+export const triggeredActionHubotTimezone: TriggeredActionContractDefinition = {
+	slug: 'triggered-action-hubot-timezone',
 	type: 'triggered-action@1.0.0',
-	name: 'Triggered action for hubot echo',
+	name: 'Triggered action for hubot timezone',
 	markers: [],
 	data: {
 		filter: {
@@ -40,7 +40,7 @@ export const triggeredActionHubotEcho: TriggeredActionContractDefinition = {
 							properties: {
 								message: {
 									type: 'string',
-									pattern: '^@hubot echo',
+									pattern: '^@hubot what time is',
 								},
 							},
 						},
@@ -48,7 +48,7 @@ export const triggeredActionHubotEcho: TriggeredActionContractDefinition = {
 				},
 			},
 		},
-		action: 'action-hubot-echo@1.0.0',
+		action: 'action-hubot-timezone@1.0.0',
 		target: {
 			$eval: 'source.id',
 		},
