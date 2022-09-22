@@ -1,0 +1,14 @@
+- commits:
+    - subject: Init codebase with echo function
+      hash: 4c4c2f8f01dbb829c44683d2317b31714de4e22c
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.1.0
+  title: ""
+  date: 2022-09-22T06:11:30.307Z
