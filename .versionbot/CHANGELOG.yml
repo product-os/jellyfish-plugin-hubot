@@ -1,4 +1,18 @@
 - commits:
+    - subject: Add Google Meet function
+      hash: bac8fbfc04892fb070d656c3e84f5c13953a6654
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.3.0
+  title: ""
+  date: 2022-09-23T05:08:19.853Z
+- commits:
     - subject: Add timezone function
       hash: 5b52f8cf1ec630bd89fd77e5cf50e47d7032d988
       body: ""

@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.3.0 - 2022-09-23
+
+* Add Google Meet function [Josh Bowling]
+
 ## 0.2.0 - 2022-09-22
 
 * Add timezone function [Josh Bowling]
