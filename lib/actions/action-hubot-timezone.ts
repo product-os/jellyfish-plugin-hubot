@@ -2,7 +2,7 @@ import { ActionDefinition, errors } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
 import type { TypeContract } from 'autumndb';
 import { parseDate } from 'chrono-node';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { Moment, tz } from 'moment-timezone';
 
 const DEFAULT_TIMEZONE = 'Europe/London';
@@ -30,7 +30,7 @@ const queryTranslations: { [key: string]: keyof Times } = {
 
 /** A dictionary of city names to timezone definitions */
 const timezonesByCity: { [key: string]: string } = {};
-_.forEach(tz.names(), (timezone) => {
+_.forEach(tz.names(), (timezone: string) => {
 	const splitZone = timezone.split('/');
 	const city = splitZone[splitZone.length - 1];
 	timezonesByCity[city.toLowerCase()] = timezone;

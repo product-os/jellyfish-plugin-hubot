@@ -2,12 +2,12 @@
   "extends": "./node_modules/@balena/lint/tsconfig.json",
   "compilerOptions": {
     "target": "es2020",
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "allowJs": false,
     "outDir": "build",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
+    "esModuleInterop": false,
     "removeComments": false,
+    "resolveJsonModule": true,
     "strict": true,
     "declaration": true,
     "skipLibCheck": true
