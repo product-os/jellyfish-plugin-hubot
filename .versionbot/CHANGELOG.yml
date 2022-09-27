@@ -1,4 +1,16 @@
 - commits:
+    - subject: Rely on flowzone for docs publishing
+      hash: 20321787ea23e94d4a6df94f82e18aebbaeaf66d
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Page-
+      nested: []
+  version: 0.3.1
+  title: ""
+  date: 2022-09-27T14:40:18.230Z
+- commits:
     - subject: Add Google Meet function
       hash: bac8fbfc04892fb070d656c3e84f5c13953a6654
       body: ""
