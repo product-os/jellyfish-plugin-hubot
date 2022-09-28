@@ -1,4 +1,18 @@
 - commits:
+    - subject: Add email hashtags function
+      hash: 6a28171c86eda2b66e6ba269332a56a4533daf52
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.4.0
+  title: ""
+  date: 2022-09-28T07:37:03.324Z
+- commits:
     - subject: Rely on flowzone for docs publishing
       hash: 20321787ea23e94d4a6df94f82e18aebbaeaf66d
       body: ""
