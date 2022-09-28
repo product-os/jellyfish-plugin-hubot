@@ -1,4 +1,16 @@
 - commits:
+    - subject: Change engines to >=16 to enable node 18 tests/usage
+      hash: 3e345c0e2bfc344064516a2df45a29d1ed51fd2e
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Page-
+      nested: []
+  version: 0.4.1
+  title: ""
+  date: 2022-09-28T08:53:46.409Z
+- commits:
     - subject: Add email hashtags function
       hash: 6a28171c86eda2b66e6ba269332a56a4533daf52
       body: ""

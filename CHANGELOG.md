@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.4.1 - 2022-09-28
+
+* Change engines to >=16 to enable node 18 tests/usage [Page-]
+
 ## 0.4.0 - 2022-09-28
 
 * Add email hashtags function [Josh Bowling]
