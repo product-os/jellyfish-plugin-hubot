@@ -1,4 +1,18 @@
 - commits:
+    - subject: Add thread-wide ping function
+      hash: 696f2e189c52c4dd5e10dcf525ed59e7fb46e809
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.5.0
+  title: ""
+  date: 2022-09-30T03:41:10.549Z
+- commits:
     - subject: Change engines to >=16 to enable node 18 tests/usage
       hash: 3e345c0e2bfc344064516a2df45a29d1ed51fd2e
       body: ""

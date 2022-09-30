@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.5.0 - 2022-09-30
+
+* Add thread-wide ping function [Josh Bowling]
+
 ## 0.4.1 - 2022-09-28
 
 * Change engines to >=16 to enable node 18 tests/usage [Page-]
