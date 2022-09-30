@@ -5,4 +5,5 @@ module.exports = {
 		"lib",
 		"test",
 	],
+	testTimeout: 60000
 };

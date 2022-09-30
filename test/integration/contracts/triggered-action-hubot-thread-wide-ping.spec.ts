@@ -1,60 +1,64 @@
-import { testUtils as workerTestUtils } from '@balena/jellyfish-worker';
+import { testUtils as wTestUtils } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
-import type { OrgContract, UserContract } from 'autumndb';
+import { testUtils as aTestUtils } from 'autumndb';
 import { setTimeout as delay } from 'timers/promises';
-import { v4 as uuid } from 'uuid';
+import { createUser } from './utils';
 import { hubotPlugin } from '../../../lib';
 
-let ctx: workerTestUtils.TestContext;
+let ctx: wTestUtils.TestContext;
+let hubot: any;
+let balenaOrg: any;
 
 beforeAll(async () => {
-	ctx = await workerTestUtils.newContext({
+	ctx = await wTestUtils.newContext({
 		plugins: [hubotPlugin()],
 	});
-}, 10000);
 
-afterAll(() => {
-	return workerTestUtils.destroyContext(ctx);
-});
-
-async function createUser(org: OrgContract): Promise<UserContract> {
-	const user = await ctx.createUser(uuid().split('-')[0]);
-	await ctx.createLink(org, user, 'has member', 'is member of');
-	return user;
-}
-
-test('Sets thread-wide ping on @t mention', async () => {
-	// Prepare necessary users
-	const org = await ctx.kernel.getContractBySlug(
-		ctx.logContext,
-		ctx.session,
-		'org-balena@1.0.0',
-	);
-	assert(org, 'org-balena not found');
-	const users = await Promise.all([
-		createUser(org),
-		createUser(org),
-		createUser(org),
-	]);
-	const hubot = await ctx.kernel.getContractBySlug(
+	hubot = await ctx.kernel.getContractBySlug(
 		ctx.logContext,
 		ctx.session,
 		'user-hubot@latest',
 	);
-	assert(hubot, 'Hubot user not found');
+	assert(hubot, 'hubot user not found');
+
+	balenaOrg = await ctx.kernel.getContractBySlug(
+		ctx.logContext,
+		ctx.session,
+		'org-balena@1.0.0',
+	);
+	assert(balenaOrg, 'org-balena not found');
+});
+
+afterAll(() => {
+	return wTestUtils.destroyContext(ctx);
+});
+
+test('sets thread-wide ping on @t mention', async () => {
+	// Prepare necessary users
+	const users = await Promise.all([
+		createUser(ctx, balenaOrg),
+		createUser(ctx, balenaOrg),
+		createUser(ctx, balenaOrg),
+	]);
 
 	// Create thread to post on
 	const thread = await ctx.createContract(
 		users[0].id,
 		{ actor: users[0] },
 		'thread@1.0.0',
-		uuid().split('-')[0],
+		aTestUtils.generateRandomId(),
 		{},
 	);
 
 	// Post as hubot user
 	// Should not be included in thread-wide ping
-	await ctx.createEvent(hubot.id, { actor: hubot }, thread, uuid(), 'message');
+	await ctx.createEvent(
+		hubot.id,
+		{ actor: hubot },
+		thread,
+		aTestUtils.generateRandomId(),
+		'message',
+	);
 
 	// Post as first normal user
 	// Should be included in thread-wide ping
@@ -62,13 +66,13 @@ test('Sets thread-wide ping on @t mention', async () => {
 		users[0].id,
 		{ actor: users[0] },
 		thread,
-		`${users[2].slug.replace(/^user-/, '@')} ${uuid()}`,
+		`${users[2].slug.replace(/^user-/, '@')} ${aTestUtils.generateRandomId()}`,
 		'message',
 	);
 
 	// Post thread-wide ping mention with second normal user
 	// Should not be included in thread-wide ping
-	const content = uuid();
+	const content = aTestUtils.generateRandomId();
 	await ctx.createEvent(
 		users[1].id,
 		{ actor: users[1] },
@@ -117,20 +121,14 @@ test('Sets thread-wide ping on @t mention', async () => {
 	expect(message.includes(users[1].slug.replace(/^user-/, '@'))).toBe(false);
 	expect(message.includes(users[2].slug.replace(/^user-/, '@'))).toBe(true);
 	expect(message.includes(content)).toBe(true);
-}, 10000);
+});
 
-test('Sets thread-wide ping on @thread mention', async () => {
+test('sets thread-wide ping on @thread mention', async () => {
 	// Prepare necessary users
-	const org = await ctx.kernel.getContractBySlug(
-		ctx.logContext,
-		ctx.session,
-		'org-balena@1.0.0',
-	);
-	assert(org, 'org-balena not found');
 	const users = await Promise.all([
-		createUser(org),
-		createUser(org),
-		createUser(org),
+		createUser(ctx, balenaOrg),
+		createUser(ctx, balenaOrg),
+		createUser(ctx, balenaOrg),
 	]);
 
 	// Create thread to post on
@@ -138,7 +136,7 @@ test('Sets thread-wide ping on @thread mention', async () => {
 		users[0].id,
 		{ actor: users[0] },
 		'thread@1.0.0',
-		uuid().split('-')[0],
+		aTestUtils.generateRandomId().split('-')[0],
 		{},
 	);
 
@@ -148,13 +146,13 @@ test('Sets thread-wide ping on @thread mention', async () => {
 		users[0].id,
 		{ actor: users[0] },
 		thread,
-		`${users[2].slug.replace(/^user-/, '@')} ${uuid()}`,
+		`${users[2].slug.replace(/^user-/, '@')} ${aTestUtils.generateRandomId()}`,
 		'message',
 	);
 
 	// Post thread-wide ping mention with second normal user
 	// Should not be included in thread-wide ping
-	const content = uuid();
+	const content = aTestUtils.generateRandomId();
 	await ctx.createEvent(
 		users[1].id,
 		{ actor: users[1] },
@@ -202,20 +200,14 @@ test('Sets thread-wide ping on @thread mention', async () => {
 	expect(message.includes(users[1].slug.replace(/^user-/, '@'))).toBe(false);
 	expect(message.includes(users[2].slug.replace(/^user-/, '@'))).toBe(true);
 	expect(message.includes(content)).toBe(true);
-}, 10000);
+});
 
-test('Sets thread-wide ping on @people mention', async () => {
+test('sets thread-wide ping on @people mention', async () => {
 	// Prepare necessary users
-	const org = await ctx.kernel.getContractBySlug(
-		ctx.logContext,
-		ctx.session,
-		'org-balena@1.0.0',
-	);
-	assert(org, 'org-balena not found');
 	const users = await Promise.all([
-		createUser(org),
-		createUser(org),
-		createUser(org),
+		createUser(ctx, balenaOrg),
+		createUser(ctx, balenaOrg),
+		createUser(ctx, balenaOrg),
 	]);
 
 	// Create thread to post on
@@ -223,7 +215,7 @@ test('Sets thread-wide ping on @people mention', async () => {
 		users[0].id,
 		{ actor: users[0] },
 		'thread@1.0.0',
-		uuid().split('-')[0],
+		aTestUtils.generateRandomId().split('-')[0],
 		{},
 	);
 
@@ -233,13 +225,13 @@ test('Sets thread-wide ping on @people mention', async () => {
 		users[0].id,
 		{ actor: users[0] },
 		thread,
-		`${users[2].slug.replace(/^user-/, '@')} ${uuid()}`,
+		`${users[2].slug.replace(/^user-/, '@')} ${aTestUtils.generateRandomId()}`,
 		'message',
 	);
 
 	// Post thread-wide ping mention with second normal user
 	// Should not be included in thread-wide ping
-	const content = uuid();
+	const content = aTestUtils.generateRandomId();
 	await ctx.createEvent(
 		users[1].id,
 		{ actor: users[1] },
@@ -287,15 +279,15 @@ test('Sets thread-wide ping on @people mention', async () => {
 	expect(message.includes(users[1].slug.replace(/^user-/, '@'))).toBe(false);
 	expect(message.includes(users[2].slug.replace(/^user-/, '@'))).toBe(true);
 	expect(message.includes(content)).toBe(true);
-}, 10000);
+});
 
-test('Ignores thread-wide pings from non-balena users', async () => {
+test('ignores thread-wide pings from non-balena users', async () => {
 	// Prepare necessary users
-	const org = await ctx.createOrg(uuid().split('-')[0]);
+	const org = await ctx.createOrg(aTestUtils.generateRandomId().split('-')[0]);
 	const users = await Promise.all([
-		createUser(org),
-		createUser(org),
-		createUser(org),
+		createUser(ctx, org),
+		createUser(ctx, org),
+		createUser(ctx, org),
 	]);
 
 	// Create thread to post on
@@ -303,7 +295,7 @@ test('Ignores thread-wide pings from non-balena users', async () => {
 		users[0].id,
 		{ actor: users[0] },
 		'thread@1.0.0',
-		uuid().split('-')[0],
+		aTestUtils.generateRandomId().split('-')[0],
 		{},
 	);
 
@@ -312,12 +304,12 @@ test('Ignores thread-wide pings from non-balena users', async () => {
 		users[0].id,
 		{ actor: users[0] },
 		thread,
-		`${users[2].slug.replace(/^user-/, '@')} ${uuid()}`,
+		`${users[2].slug.replace(/^user-/, '@')} ${aTestUtils.generateRandomId()}`,
 		'message',
 	);
 
 	// Post thread-wide ping mention with second normal user
-	const content = uuid();
+	const content = aTestUtils.generateRandomId();
 	const message = await ctx.createEvent(
 		users[1].id,
 		{ actor: users[1] },
@@ -326,7 +318,7 @@ test('Ignores thread-wide pings from non-balena users', async () => {
 		'message',
 	);
 
-	// Wait a few seconds to allow worker to process triggered actions
+	// Wait a few seconds for the worker to process triggered actions
 	await delay(3000);
 
 	// Assert that the message hasn't been updated
@@ -339,20 +331,15 @@ test('Ignores thread-wide pings from non-balena users', async () => {
 	expect((latest.data.payload as any).message).toEqual(
 		(message.data.payload as any).message,
 	);
-}, 10000);
+});
 
-test('Thread-wide pings only include balena users', async () => {
+test('thread-wide pings only include balena users', async () => {
 	// Prepare necessary users
-	const org = await ctx.kernel.getContractBySlug(
-		ctx.logContext,
-		ctx.session,
-		'org-balena@1.0.0',
-	);
-	assert(org, 'org-balena not found');
 	const users = await Promise.all([
-		createUser(org),
-		createUser(org),
-		ctx.createUser(uuid().split('-')[0]),
+		createUser(ctx, balenaOrg),
+		createUser(ctx, balenaOrg),
+		ctx.createUser(aTestUtils.generateRandomId().split('-')[0]),
+		ctx.createUser(aTestUtils.generateRandomId().split('-')[0]),
 	]);
 
 	// Create thread to post on
@@ -360,23 +347,33 @@ test('Thread-wide pings only include balena users', async () => {
 		users[0].id,
 		{ actor: users[0] },
 		'thread@1.0.0',
-		uuid().split('-')[0],
+		aTestUtils.generateRandomId().split('-')[0],
 		{},
 	);
 
-	// Post as first normal user
+	// Post as first normal user, mentioning external user
 	// Should be the only user included in thread-wide ping
 	await ctx.createEvent(
 		users[0].id,
 		{ actor: users[0] },
 		thread,
-		`${users[2].slug.replace(/^user-/, '@')} ${uuid()}`,
+		`${users[2].slug.replace(/^user-/, '@')} ${aTestUtils.generateRandomId()}`,
+		'message',
+	);
+
+	// Post as other external user
+	// Should not be included in thread-wide ping
+	await ctx.createEvent(
+		users[3].id,
+		{ actor: users[3] },
+		thread,
+		aTestUtils.generateRandomId(),
 		'message',
 	);
 
 	// Post thread-wide ping mention with second normal user
 	// Should not be included in thread-wide ping
-	const content = uuid();
+	const content = aTestUtils.generateRandomId();
 	await ctx.createEvent(
 		users[1].id,
 		{ actor: users[1] },
@@ -413,4 +410,4 @@ test('Thread-wide pings only include balena users', async () => {
 			},
 		},
 	});
-}, 10000);
+});

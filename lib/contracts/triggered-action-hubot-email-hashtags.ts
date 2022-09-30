@@ -24,6 +24,32 @@ export const triggeredActionHubotEmailHashtags: TriggeredActionContractDefinitio
 							},
 						},
 					},
+					'was created by': {
+						type: 'object',
+						required: ['type'],
+						properties: {
+							type: {
+								type: 'string',
+								const: 'user@1.0.0',
+							},
+						},
+						$$links: {
+							'is member of': {
+								type: 'object',
+								required: ['type', 'slug'],
+								properties: {
+									type: {
+										type: 'string',
+										const: 'org@1.0.0',
+									},
+									slug: {
+										type: 'string',
+										const: 'org-balena',
+									},
+								},
+							},
+						},
+					},
 				},
 				required: ['type', 'data'],
 				properties: {

@@ -1,11 +1,11 @@
 import { defaultEnvironment } from '@balena/jellyfish-environment';
-import { testUtils as workerTestUtils } from '@balena/jellyfish-worker';
+import { testUtils as wTestUtils } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
 import * as nodemailer from 'nodemailer';
 import * as nodemailerMock from 'nodemailer-mock';
 import { sendEmail } from '../../../lib/actions/action-hubot-email-hashtags';
 
-let ctx: workerTestUtils.TestContext;
+let ctx: wTestUtils.TestContext;
 const smtpServer = defaultEnvironment.hubot.emailHashtags.smtp.server;
 const smtpUser = encodeURIComponent(
 	defaultEnvironment.hubot.emailHashtags.smtp.user,
@@ -13,11 +13,11 @@ const smtpUser = encodeURIComponent(
 const smtpPassword = defaultEnvironment.hubot.emailHashtags.smtp.password;
 
 beforeAll(async () => {
-	ctx = await workerTestUtils.newContext();
-}, 10000);
+	ctx = await wTestUtils.newContext();
+});
 
 afterAll(() => {
-	return workerTestUtils.destroyContext(ctx);
+	return wTestUtils.destroyContext(ctx);
 });
 
 test('Sends expected emails', async () => {

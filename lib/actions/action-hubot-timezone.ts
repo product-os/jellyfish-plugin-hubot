@@ -37,7 +37,7 @@ _.forEach(tz.names(), (timezone: string) => {
 });
 
 const handler: ActionDefinition['handler'] = async (
-	session,
+	_session,
 	context,
 	contract,
 	request,
@@ -105,10 +105,10 @@ const handler: ActionDefinition['handler'] = async (
 
 	const date = new Date();
 	await context.insertCard(
-		session,
+		context.privilegedSession,
 		actionRequestType as TypeContract,
 		{
-			actor: request.actor,
+			actor: hubot.id,
 			timestamp: date.toISOString(),
 			attachEvents: true,
 		},
