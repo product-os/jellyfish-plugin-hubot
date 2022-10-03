@@ -1,42 +1,110 @@
-import { testUtils as workerTestUtils } from '@balena/jellyfish-worker';
+import { testUtils as wTestUtils } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
+import { testUtils as aTestUtils } from 'autumndb';
+import { createUser } from './utils';
 import { hubotPlugin } from '../../../lib';
 
-let ctx: workerTestUtils.TestContext;
+let ctx: wTestUtils.TestContext;
+let hubot: any;
+let balenaOrg: any;
 
 beforeAll(async () => {
-	ctx = await workerTestUtils.newContext({
+	ctx = await wTestUtils.newContext({
 		plugins: [hubotPlugin()],
 	});
-}, 10000);
 
-afterAll(() => {
-	return workerTestUtils.destroyContext(ctx);
-});
-
-test('Correctly responds to timezone inquiries', async () => {
-	const thread = await ctx.createContract(
-		ctx.adminUserId,
-		ctx.session,
-		'thread@1.0.0',
-		'foobar',
-		{},
-	);
-	await ctx.createEvent(
-		ctx.adminUserId,
-		ctx.session,
-		thread,
-		'@hubot what time is 1pm from London to Athens',
-		'message',
-	);
-	await ctx.flushAll(ctx.session);
-
-	const hubot = await ctx.kernel.getContractBySlug(
+	hubot = await ctx.kernel.getContractBySlug(
 		ctx.logContext,
 		ctx.session,
 		'user-hubot@latest',
 	);
-	assert(hubot, 'Hubot user not found');
+	assert(hubot, 'hubot user not found');
+
+	balenaOrg = await ctx.kernel.getContractBySlug(
+		ctx.logContext,
+		ctx.session,
+		'org-balena@1.0.0',
+	);
+	assert(balenaOrg, 'org-balena not found');
+});
+
+afterAll(() => {
+	return wTestUtils.destroyContext(ctx);
+});
+
+test('correctly responds to balena user messages', async () => {
+	// Prepare necessary users
+	const user = await createUser(ctx, balenaOrg);
+
+	// Create thread to post on
+	const thread = await ctx.createContract(
+		user.id,
+		{ actor: user },
+		'thread@1.0.0',
+		aTestUtils.generateRandomId(),
+		{},
+	);
+
+	// Create message
+	await ctx.createEvent(
+		user.id,
+		{ actor: user },
+		thread,
+		'@hubot what time is 1pm from London to Athens',
+		'message',
+	);
+
+	await ctx.waitForMatch({
+		type: 'object',
+		required: ['type', 'data'],
+		properties: {
+			type: {
+				const: 'whisper@1.0.0',
+			},
+			data: {
+				type: 'object',
+				required: ['actor', 'payload'],
+				properties: {
+					actor: {
+						const: hubot.id,
+					},
+					payload: {
+						type: 'object',
+						required: ['message'],
+						properties: {
+							message: {
+								type: 'string',
+								pattern: '^[0-9]{1,2}:[0-9]{1,2}\\s+[A|P]M$',
+							},
+						},
+					},
+				},
+			},
+		},
+	});
+});
+
+test('correctly responds to balena user whispers', async () => {
+	// Prepare necessary users
+	const user = await createUser(ctx, balenaOrg);
+
+	// Create thread to post on
+	const thread = await ctx.createContract(
+		user.id,
+		{ actor: user },
+		'thread@1.0.0',
+		aTestUtils.generateRandomId(),
+		{},
+	);
+
+	// Create whisper
+	await ctx.createEvent(
+		user.id,
+		{ actor: user },
+		thread,
+		'@hubot what time is 1pm from London to Athens',
+		'whisper',
+	);
 
 	await ctx.waitForMatch({
 		type: 'object',
