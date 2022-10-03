@@ -1,4 +1,19 @@
 - commits:
+    - subject: Restrict hubot triggers to balena users
+      hash: cf77867660f92df84556004821c52c6f5a5846dc
+      body: |
+        Only execute triggered actions for users that belong to the balena org
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.5.1
+  title: ""
+  date: 2022-10-03T05:51:01.958Z
+- commits:
     - subject: Add thread-wide ping function
       hash: 696f2e189c52c4dd5e10dcf525ed59e7fb46e809
       body: ""

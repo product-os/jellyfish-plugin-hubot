@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.5.1 - 2022-10-03
+
+* Restrict hubot triggers to balena users [Josh Bowling]
+
 ## 0.5.0 - 2022-09-30
 
 * Add thread-wide ping function [Josh Bowling]
