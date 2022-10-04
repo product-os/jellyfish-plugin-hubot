@@ -45,15 +45,19 @@
   "author": "Balena.io. <hello@balena.io>",
   "license": "AGPL-3.0",
   "dependencies": {
-    "@balena/jellyfish-environment": "^14.0.17",
+    "@balena/jellyfish-environment": "^14.1.0",
     "@balena/jellyfish-logger": "^5.1.91",
     "@balena/jellyfish-worker": "^34.1.0",
     "async-retry": "^1.3.3",
     "autumndb": "^22.2.73",
+    "axios": "^0.27.2",
     "chrono-node": "^2.4.1",
+    "js-base64": "^3.7.2",
+    "lru-cache": "^7.14.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.37",
     "nodemailer": "^6.7.8",
+    "typed-error": "^3.2.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
