@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.7.0 - 2022-10-05
+
+* Add remind function [Josh Bowling]
+
 ## 0.6.1 - 2022-10-05
 
 * Leave: Set cache TTL to 1 hour [Josh Bowling]

@@ -1,4 +1,18 @@
 - commits:
+    - subject: Add remind function
+      hash: 58dfa1394ddc1b48016e0513c98775ebe84c2653
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.7.0
+  title: ""
+  date: 2022-10-05T08:17:31.436Z
+- commits:
     - subject: "Leave: Set cache TTL to 1 hour"
       hash: 3c173450d43becc922e5f68c783606c75e908330
       body: ""
