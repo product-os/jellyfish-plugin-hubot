@@ -13,6 +13,10 @@ const env = defaultEnvironment.hubot;
 const logger = getLogger(__filename);
 const LEAVE_CACHE = new LRU({
 	max: 200,
+	ttl: 1000 * 60 * 60,
+	allowStale: false,
+	updateAgeOnGet: false,
+	updateAgeOnHas: false,
 });
 
 // Number of times to retry Calamari API calls
