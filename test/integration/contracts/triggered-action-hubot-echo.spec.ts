@@ -154,7 +154,7 @@ test('echo requests are ignored for non-balena users', async () => {
 		'message',
 	);
 
-	// Wait a few seconds for the worker to process triggered actions
+	// Wait a few seconds to ensure no response is sent
 	await delay(3000);
 
 	const matches = await ctx.kernel.query(
