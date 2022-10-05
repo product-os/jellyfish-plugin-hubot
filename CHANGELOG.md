@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.6.0 - 2022-10-05
+
+* Add leave function [Josh Bowling]
+
 ## 0.5.1 - 2022-10-03
 
 * Restrict hubot triggers to balena users [Josh Bowling]

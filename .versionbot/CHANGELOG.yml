@@ -1,4 +1,18 @@
 - commits:
+    - subject: Add leave function
+      hash: e80670013683a7d6073b6a5ee2d5b28e76233f40
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.6.0
+  title: ""
+  date: 2022-10-05T01:22:08.263Z
+- commits:
     - subject: Restrict hubot triggers to balena users
       hash: cf77867660f92df84556004821c52c6f5a5846dc
       body: |
