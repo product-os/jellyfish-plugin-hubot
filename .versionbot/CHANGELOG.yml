@@ -1,4 +1,18 @@
 - commits:
+    - subject: Various cleanup
+      hash: 27baeb81b1bbab7e41497a7d0af09ce2c66d3a0e
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.9.1
+  title: ""
+  date: 2022-10-08T09:03:03.234Z
+- commits:
     - subject: Add support function
       hash: afd66d1d71f05bd5449953962133006c16ad01b6
       body: ""
