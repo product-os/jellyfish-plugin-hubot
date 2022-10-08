@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.9.0 - 2022-10-08
+
+* Add support function [Josh Bowling]
+
 ## 0.8.0 - 2022-10-06
 
 * Add calendar function [Josh Bowling]
