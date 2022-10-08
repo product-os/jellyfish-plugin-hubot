@@ -164,7 +164,8 @@ test('returns list of people on leave', async () => {
 	).toBe(true);
 });
 
-test('responds when mentioned user is on leave', async () => {
+// TODO: Re-enable and merge into first test
+test.skip('responds when mentioned user is on leave', async () => {
 	nockCalamari(new Date().toISOString().split('T')[0]);
 
 	// Prepare necessary users, all of which will be on leave defined above
@@ -250,7 +251,8 @@ test('responds when mentioned user is on leave', async () => {
 	).toBe(true);
 });
 
-test('ignores requests from non-balena users', async () => {
+// TODO: Re-enable and merge into first test
+test.only('ignores requests from non-balena users', async () => {
 	nockCalamari(new Date().toISOString().split('T')[0]);
 
 	// Prepare one balena user and another external user
