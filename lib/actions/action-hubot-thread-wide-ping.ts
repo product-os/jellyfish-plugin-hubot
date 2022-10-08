@@ -9,25 +9,16 @@ const handler: ActionDefinition['handler'] = async (
 	contract,
 	request,
 ) => {
-	// Get required type
-	const actionRequestType = await context.getCardBySlug(
-		context.privilegedSession,
-		'action-request@1.0.0',
-	);
-	assert(
-		actionRequestType,
-		new errors.SyncNoElement('Type not found: action-request'),
-	);
-
-	// Get actor user
-	const actor = await context.getCardById(
-		context.privilegedSession,
-		(contract.data as any).actor,
-	);
-	assert(
-		actor,
-		new errors.WorkerNoElement(`Actor not found: ${contract.data.actor}`),
-	);
+	// Get required contracts
+	const [actionRequest, actor] = await Promise.all([
+		context.getCardBySlug(context.privilegedSession, 'action-request@1.0.0'),
+		context.getCardById(
+			context.privilegedSession,
+			(contract.data as any).actor,
+		),
+	]);
+	assert(actionRequest, 'action-request type not found');
+	assert(actor, `actor not found: ${contract.data.actor}`);
 
 	// Prepare results to be returned
 	const results = {
@@ -204,7 +195,7 @@ const handler: ActionDefinition['handler'] = async (
 	const date = new Date();
 	await context.insertCard(
 		context.privilegedSession,
-		actionRequestType as TypeContract,
+		actionRequest as TypeContract,
 		{
 			actor: actor.id,
 			timestamp: date.toISOString(),

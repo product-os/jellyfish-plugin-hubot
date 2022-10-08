@@ -1,4 +1,4 @@
-import { ActionDefinition, errors } from '@balena/jellyfish-worker';
+import type { ActionDefinition } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
 import type { TypeContract } from 'autumndb';
 import { parseDate } from 'chrono-node';
@@ -42,25 +42,13 @@ const handler: ActionDefinition['handler'] = async (
 	contract,
 	request,
 ) => {
-	// Get required type
-	const actionRequestType = await context.getCardBySlug(
-		context.privilegedSession,
-		'action-request@1.0.0',
-	);
-	assert(
-		actionRequestType,
-		new errors.SyncNoElement('Type not found: action-request'),
-	);
-
-	// Get hubot user
-	const hubot = await context.getCardBySlug(
-		context.privilegedSession,
-		'user-hubot@1.0.0',
-	);
-	assert(
-		hubot,
-		new errors.SyncNoElement('Internal user not found: user-hubot'),
-	);
+	// Get required contracts
+	const [actionRequest, hubot] = await Promise.all([
+		context.getCardBySlug(context.privilegedSession, 'action-request@1.0.0'),
+		context.getCardBySlug(context.privilegedSession, 'user-hubot@1.0.0'),
+	]);
+	assert(actionRequest, 'action-request type not found');
+	assert(hubot, 'user-hubot not found');
 
 	// A query, to mutate as required
 	const query: TimeQuery = {
@@ -106,7 +94,7 @@ const handler: ActionDefinition['handler'] = async (
 	const date = new Date();
 	await context.insertCard(
 		context.privilegedSession,
-		actionRequestType as TypeContract,
+		actionRequest as TypeContract,
 		{
 			actor: hubot.id,
 			timestamp: date.toISOString(),

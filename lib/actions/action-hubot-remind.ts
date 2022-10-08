@@ -115,7 +115,7 @@ const handler: ActionDefinition['handler'] = async (
 	assert(actionRequest, 'action-request type not found');
 	assert(scheduledAction, 'scheduled-action type not found');
 	assert(hubot, 'user-hubot not found');
-	assert(sender, `sender user not found: ${contract.data.actor}`);
+	assert(sender, `user not found: ${contract.data.actor}`);
 
 	// Break the text down into sections, around first instances of 'remind', 'in|on' & 'to'
 	const text = (contract.data.payload as any).message;
