@@ -1,6 +1,6 @@
 import { defaultEnvironment } from '@balena/jellyfish-environment';
 import { getLogger, LogContext } from '@balena/jellyfish-logger';
-import { ActionDefinition, errors } from '@balena/jellyfish-worker';
+import type { ActionDefinition } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
 import * as retry from 'async-retry';
 import type { TypeContract, UserContract } from 'autumndb';
@@ -141,35 +141,18 @@ const handler: ActionDefinition['handler'] = async (
 		return results;
 	}
 
-	// Get required type
-	const actionRequestType = await context.getCardBySlug(
-		context.privilegedSession,
-		'action-request@1.0.0',
-	);
-	assert(
-		actionRequestType,
-		new errors.SyncNoElement('Type not found: action-request'),
-	);
-
-	// Get hubot user
-	const hubot = await context.getCardBySlug(
-		context.privilegedSession,
-		'user-hubot@1.0.0',
-	);
-	assert(
-		hubot,
-		new errors.SyncNoElement('Internal user not found: user-hubot'),
-	);
-
-	// Get sender user
-	const user = await context.getCardById(
-		context.privilegedSession,
-		contract.data.actor as string,
-	);
-	assert(
-		user,
-		new errors.SyncNoElement(`Author user not found: ${contract.data.string}`),
-	);
+	// Get required contracts
+	const [actionRequest, hubot, user] = await Promise.all([
+		context.getCardBySlug(context.privilegedSession, 'action-request@1.0.0'),
+		context.getCardBySlug(context.privilegedSession, 'user-hubot@1.0.0'),
+		context.getCardById(
+			context.privilegedSession,
+			contract.data.actor as string,
+		),
+	]);
+	assert(actionRequest, 'action-request type not found');
+	assert(hubot, 'user-hubot not found');
+	assert(user, `user not found: ${contract.data.string}`);
 
 	// Send email
 	const sendEmailResults = await sendEmail(
@@ -188,7 +171,7 @@ const handler: ActionDefinition['handler'] = async (
 	const date = new Date();
 	await context.insertCard(
 		session,
-		actionRequestType as TypeContract,
+		actionRequest as TypeContract,
 		{
 			actor: request.actor,
 			timestamp: date.toISOString(),
