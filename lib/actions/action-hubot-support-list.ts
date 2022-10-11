@@ -131,11 +131,12 @@ const handler: ActionDefinition['handler'] = async (
 	request,
 ) => {
 	// Get required contracts
-	const [actionRequest, hubot] = await Promise.all([
-		context.getCardBySlug(context.privilegedSession, 'action-request@1.0.0'),
-		context.getCardBySlug(context.privilegedSession, 'user-hubot@1.0.0'),
-	]);
+	const actionRequest = context.cards['action-request@1.0.0'] as TypeContract;
 	assert(actionRequest, 'action-request type not found');
+	const hubot = await context.getCardBySlug(
+		context.privilegedSession,
+		'user-hubot@1.0.0',
+	);
 	assert(hubot, 'user-hubot not found');
 
 	// Get balena users

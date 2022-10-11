@@ -10,14 +10,12 @@ const handler: ActionDefinition['handler'] = async (
 	request,
 ) => {
 	// Get required contracts
-	const [actionRequest, actor] = await Promise.all([
-		context.getCardBySlug(context.privilegedSession, 'action-request@1.0.0'),
-		context.getCardById(
-			context.privilegedSession,
-			(contract.data as any).actor,
-		),
-	]);
+	const actionRequest = context.cards['action-request@1.0.0'] as TypeContract;
 	assert(actionRequest, 'action-request type not found');
+	const actor = await context.getCardById(
+		context.privilegedSession,
+		(contract.data as any).actor,
+	);
 	assert(actor, `actor not found: ${contract.data.actor}`);
 
 	// Prepare results to be returned
