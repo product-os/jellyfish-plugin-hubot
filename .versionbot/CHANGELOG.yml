@@ -1,4 +1,18 @@
 - commits:
+    - subject: Use type cache when possible
+      hash: 16be6ee840af148fb429ef927add57c4f1b82621
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.9.4
+  title: ""
+  date: 2022-10-11T03:26:58.945Z
+- commits:
     - subject: "CI: Use JSON for Jest config"
       hash: 583f2edf5bf2071b22137a10f5ad0c6832de78de
       body: ""

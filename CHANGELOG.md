@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.9.4 - 2022-10-11
+
+* Use type cache when possible [Josh Bowling]
+
 ## 0.9.3 - 2022-10-10
 
 * CI: Use JSON for Jest config [Josh Bowling]
