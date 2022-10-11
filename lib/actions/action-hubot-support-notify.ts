@@ -240,14 +240,14 @@ const handler: ActionDefinition['handler'] = async (
 	request,
 ) => {
 	// Get required contracts
-	const [actionRequest, hubot, thread] = await Promise.all([
-		context.getCardBySlug(context.privilegedSession, 'action-request@1.0.0'),
+	const actionRequest = context.cards['action-request@1.0.0'] as TypeContract;
+	assert(actionRequest, 'action-request type not found');
+	const [hubot, thread] = await Promise.all([
 		context.getCardBySlug(context.privilegedSession, 'user-hubot@1.0.0'),
 		context.getCardById(context.privilegedSession, request.arguments.thread),
 	]);
-	assert(actionRequest, 'action-request type not found');
 	assert(hubot, 'user-hubot not found');
-	assert(thread, `thread contract not found: ${env.thread}`);
+	assert(thread, `thread contract not found: ${request.arguments.thread}`);
 
 	// Get balena users
 	const users = await getBalenaUsers(context);

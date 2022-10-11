@@ -142,15 +142,15 @@ const handler: ActionDefinition['handler'] = async (
 	}
 
 	// Get required contracts
-	const [actionRequest, hubot, user] = await Promise.all([
-		context.getCardBySlug(context.privilegedSession, 'action-request@1.0.0'),
+	const actionRequest = context.cards['action-request@1.0.0'] as TypeContract;
+	assert(actionRequest, 'action-request type not found');
+	const [hubot, user] = await Promise.all([
 		context.getCardBySlug(context.privilegedSession, 'user-hubot@1.0.0'),
 		context.getCardById(
 			context.privilegedSession,
 			contract.data.actor as string,
 		),
 	]);
-	assert(actionRequest, 'action-request type not found');
 	assert(hubot, 'user-hubot not found');
 	assert(user, `user not found: ${contract.data.string}`);
 
