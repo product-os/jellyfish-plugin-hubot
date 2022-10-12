@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.9.5 - 2022-10-12
+
+* CI: Improve integration tests [Josh Bowling]
+
 ## 0.9.4 - 2022-10-11
 
 * Use type cache when possible [Josh Bowling]

@@ -1,4 +1,18 @@
 - commits:
+    - subject: "CI: Improve integration tests"
+      hash: 48550deef0118aac1159a9bdf7554847fa672d35
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.9.5
+  title: ""
+  date: 2022-10-12T09:22:25.161Z
+- commits:
     - subject: Use type cache when possible
       hash: 16be6ee840af148fb429ef927add57c4f1b82621
       body: ""
