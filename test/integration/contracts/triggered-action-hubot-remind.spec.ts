@@ -15,24 +15,26 @@ afterAll(() => {
 	return wTestUtils.destroyContext(ctx);
 });
 
-test('reminders are created for balena users', async () => {
+test('reminders are created', async () => {
 	// Prepare necessary users
-	const hubot = await ctx.kernel.getContractBySlug(
-		ctx.logContext,
-		ctx.session,
-		'user-hubot@latest',
-	);
-	assert(hubot, 'hubot user not found');
-	const balenaOrg = await ctx.kernel.getContractBySlug(
-		ctx.logContext,
-		ctx.session,
-		'org-balena@1.0.0',
-	);
+	const [hubot, balenaOrg] = await Promise.all([
+		ctx.kernel.getContractBySlug(
+			ctx.logContext,
+			ctx.session,
+			'user-hubot@latest',
+		),
+		ctx.kernel.getContractBySlug(
+			ctx.logContext,
+			ctx.session,
+			'org-balena@1.0.0',
+		),
+	]);
+	assert(hubot, 'user-hubot not found');
 	assert(balenaOrg, 'org-balena not found');
 	const user = ctx.session.actor;
 	await ctx.createLink(balenaOrg, user, 'has member', 'is member of');
 
-	// Assert echo whisper created from request in message
+	// Create a reminder
 	const thread = await ctx.createContract(
 		user.id,
 		{ actor: user },
@@ -99,8 +101,8 @@ test('reminders are created for balena users', async () => {
 		},
 	});
 
-	// Assert that the expected confirmation whisper was created
-	const confirmation = await ctx.waitForMatch({
+	// Assert that the expected reminder whisper was created
+	const match = await ctx.waitForMatch({
 		type: 'object',
 		required: ['type', 'data'],
 		properties: {
@@ -130,7 +132,7 @@ test('reminders are created for balena users', async () => {
 			},
 		},
 	});
-	expect(
-		(confirmation.data.payload as any).message.includes('to do this ^^^'),
-	).toBe(true);
+	expect((match.data.payload as any).message.includes('to do this ^^^')).toBe(
+		true,
+	);
 });
