@@ -1,7 +1,6 @@
 import { testUtils as wTestUtils } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
 import { testUtils as aTestUtils } from 'autumndb';
-import { setTimeout as delay } from 'timers/promises';
 import { createUser } from './utils';
 import { hubotPlugin } from '../../../lib';
 
@@ -279,58 +278,6 @@ test('sets thread-wide ping on @people mention', async () => {
 	expect(message.includes(users[1].slug.replace(/^user-/, '@'))).toBe(false);
 	expect(message.includes(users[2].slug.replace(/^user-/, '@'))).toBe(true);
 	expect(message.includes(content)).toBe(true);
-});
-
-test('ignores thread-wide pings from non-balena users', async () => {
-	// Prepare necessary users
-	const org = await ctx.createOrg(aTestUtils.generateRandomId().split('-')[0]);
-	const users = await Promise.all([
-		createUser(ctx, org),
-		createUser(ctx, org),
-		createUser(ctx, org),
-	]);
-
-	// Create thread to post on
-	const thread = await ctx.createContract(
-		users[0].id,
-		{ actor: users[0] },
-		'thread@1.0.0',
-		aTestUtils.generateRandomId().split('-')[0],
-		{},
-	);
-
-	// Post as first normal user
-	await ctx.createEvent(
-		users[0].id,
-		{ actor: users[0] },
-		thread,
-		`${users[2].slug.replace(/^user-/, '@')} ${aTestUtils.generateRandomId()}`,
-		'message',
-	);
-
-	// Post thread-wide ping mention with second normal user
-	const content = aTestUtils.generateRandomId();
-	const message = await ctx.createEvent(
-		users[1].id,
-		{ actor: users[1] },
-		thread,
-		`${content} @people`,
-		'message',
-	);
-
-	// Wait a few seconds for the worker to process triggered actions
-	await delay(3000);
-
-	// Assert that the message hasn't been updated
-	const latest = await ctx.kernel.getContractById(
-		ctx.logContext,
-		ctx.session,
-		message.id,
-	);
-	assert(latest, `Failed to get message: ${message.id}`);
-	expect((latest.data.payload as any).message).toEqual(
-		(message.data.payload as any).message,
-	);
 });
 
 test('thread-wide pings only include balena users', async () => {
