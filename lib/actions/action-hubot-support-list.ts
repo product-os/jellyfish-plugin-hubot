@@ -52,6 +52,7 @@ export async function fetchSupportSlots(
 	const jwt = JSON.parse(env.jwt);
 	const events = await fetchCalendarEvents(jwt.client_email, jwt.private_key, {
 		calendarId: env.calendar,
+		q: 'on balena-io support',
 	});
 	if (!events) {
 		return supportSlots;
