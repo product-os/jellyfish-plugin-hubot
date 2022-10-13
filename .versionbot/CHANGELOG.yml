@@ -1,4 +1,18 @@
 - commits:
+    - subject: Improve support calendar criteria
+      hash: cad8c314e986b60cdd2358c65b7c74f9ee20c3f2
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.9.6
+  title: ""
+  date: 2022-10-13T02:28:15.161Z
+- commits:
     - subject: "CI: Improve integration tests"
       hash: 48550deef0118aac1159a9bdf7554847fa672d35
       body: ""

@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.9.6 - 2022-10-13
+
+* Improve support calendar criteria [Josh Bowling]
+
 ## 0.9.5 - 2022-10-12
 
 * CI: Improve integration tests [Josh Bowling]
