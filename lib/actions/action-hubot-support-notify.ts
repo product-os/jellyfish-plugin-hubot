@@ -1,5 +1,4 @@
 import { defaultEnvironment } from '@balena/jellyfish-environment';
-import { getLogger, LogContext } from '@balena/jellyfish-logger';
 import type { ActionDefinition } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
 import type { TypeContract, UserContract } from 'autumndb';
@@ -11,7 +10,6 @@ import { fetchCalendarEvents } from './calendar-utils';
 import { getBalenaUsers } from '../calamari';
 
 const env = defaultEnvironment.hubot.support;
-const logger = getLogger(__filename);
 
 // Local cache to keep track of notified shift starts/ends
 const NOTIFIED_START_CACHE = new LRU({
@@ -126,12 +124,10 @@ export function isSoonIsh(date: calendar_v3.Schema$EventDateTime): boolean {
  * @summary Generate notification message for support shift handovers
  * @function
  *
- * @param logContext - log context
  * @param users - balena users
  * @returns notification message, or undefined if no message is needed
  */
 async function makeHandoverMessage(
-	logContext: LogContext,
 	users: UserContract[],
 ): Promise<string | undefined> {
 	// Retrieve the first page of events from the calendar
@@ -151,10 +147,6 @@ async function makeHandoverMessage(
 			(event.end && isSoon(event.end))
 		) {
 			return true;
-		} else {
-			logger.error(logContext, 'Unable, to determine if event is soon', {
-				event,
-			});
 		}
 	});
 
@@ -254,7 +246,7 @@ const handler: ActionDefinition['handler'] = async (
 	const users = await getBalenaUsers(context);
 
 	// Make notification message
-	const message = await makeHandoverMessage(request.logContext, users);
+	const message = await makeHandoverMessage(users);
 
 	// Send the notification message if necessary
 	if (message) {
