@@ -1,4 +1,18 @@
 - commits:
+    - subject: Remove error log from support notify check
+      hash: f9a555afc01d988a83bafbda4164ac5bec9600bd
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.9.7
+  title: ""
+  date: 2022-10-18T08:24:48.306Z
+- commits:
     - subject: Improve support calendar criteria
       hash: cad8c314e986b60cdd2358c65b7c74f9ee20c3f2
       body: ""

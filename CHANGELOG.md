@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.9.7 - 2022-10-18
+
+* Remove error log from support notify check [Josh Bowling]
+
 ## 0.9.6 - 2022-10-13
 
 * Improve support calendar criteria [Josh Bowling]
