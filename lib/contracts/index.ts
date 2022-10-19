@@ -3,6 +3,7 @@ import { scheduledActionHubotCalendar } from './scheduled-action-hubot-calendar'
 import { scheduledActionHubotSupportNotify } from './scheduled-action-hubot-support-notify';
 import { triggeredActionHubotEcho } from './triggered-action-hubot-echo';
 import { triggeredActionHubotEmailHashtags } from './triggered-action-hubot-email-hashtags';
+import { triggeredActionHubotHelp } from './triggered-action-hubot-help';
 import { triggeredActionHubotLeave } from './triggered-action-hubot-leave';
 import { triggeredActionHubotMeet } from './triggered-action-hubot-meet';
 import { triggeredActionHubotRemind } from './triggered-action-hubot-remind';
@@ -15,6 +16,7 @@ export const contracts: ContractDefinition[] = [
 	scheduledActionHubotSupportNotify,
 	triggeredActionHubotEcho,
 	triggeredActionHubotEmailHashtags,
+	triggeredActionHubotHelp,
 	triggeredActionHubotLeave,
 	triggeredActionHubotMeet,
 	triggeredActionHubotRemind,
