@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.9.8 - 2022-10-19
+
+* Update worker to v35 [Josh Bowling]
+
 ## 0.9.7 - 2022-10-18
 
 * Remove error log from support notify check [Josh Bowling]
