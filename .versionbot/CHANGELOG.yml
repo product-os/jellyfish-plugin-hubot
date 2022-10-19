@@ -1,4 +1,18 @@
 - commits:
+    - subject: "Timezone: Parse time using timezone offset"
+      hash: c5666b1ad387139481df2d4abd00626950a989b4
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.9.9
+  title: ""
+  date: 2022-10-19T05:00:56.129Z
+- commits:
     - subject: Update worker to v35
       hash: 4e221ed814af3baf8acd23de69f48f168773f5d2
       body: ""

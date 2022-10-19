@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.9.9 - 2022-10-19
+
+* Timezone: Parse time using timezone offset [Josh Bowling]
+
 ## 0.9.8 - 2022-10-19
 
 * Update worker to v35 [Josh Bowling]
