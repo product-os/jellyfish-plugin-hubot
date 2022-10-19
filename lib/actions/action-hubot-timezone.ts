@@ -4,6 +4,7 @@ import type { TypeContract } from 'autumndb';
 import { parseDate } from 'chrono-node';
 import * as _ from 'lodash';
 import { Moment, tz } from 'moment-timezone';
+import * as moment from 'moment';
 
 const DEFAULT_TIMEZONE = 'Europe/London';
 
@@ -81,16 +82,18 @@ const handler: ActionDefinition['handler'] = async (
 	});
 
 	// If there is a time in the message, mutate the query with that
+	let response = 'Location not recognised';
 	query.from = times.from;
 	query.to = times.to;
-	const timeFound = parseDate(message);
-	if (timeFound) {
-		query.time = tz(timeFound, query.from);
+	if (tz.zone(query.from) && tz.zone(query.to)) {
+		const timeFound = parseDate(message, {
+			timezone: moment().tz(query.from).utcOffset(),
+		});
+		if (timeFound) {
+			query.time = tz(timeFound, query.from);
+			response = query.time.tz(query.to).format('LT');
+		}
 	}
-
-	const response = tz.zone(query.to)
-		? query.time.tz(query.to).format('LT')
-		: 'Location not recognised';
 
 	const date = new Date();
 	await context.insertCard(
