@@ -1,4 +1,18 @@
 - commits:
+    - subject: Add help command
+      hash: 1191c748661cd068a86fc7823ccc43dafadaea39
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.10.0
+  title: ""
+  date: 2022-10-19T07:05:44.315Z
+- commits:
     - subject: "Timezone: Parse time using timezone offset"
       hash: c5666b1ad387139481df2d4abd00626950a989b4
       body: ""
