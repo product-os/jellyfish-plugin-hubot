@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as nodemailer from 'nodemailer';
 import { v4 as uuid } from 'uuid';
+import { createWhisper } from './utils';
 
 const logger = getLogger(__filename);
 const emailLookup = JSON.parse(defaultEnvironment.hubot.emailHashtags.hashtags);
@@ -116,7 +117,7 @@ ${footer}
 }
 
 const handler: ActionDefinition['handler'] = async (
-	session,
+	_session,
 	context,
 	contract,
 	request,
@@ -168,35 +169,13 @@ const handler: ActionDefinition['handler'] = async (
 		.join('\n')}`;
 
 	// Return whisper to user
-	const date = new Date();
-	await context.insertCard(
-		session,
+	await createWhisper(
+		request.logContext,
+		context,
 		actionRequest as TypeContract,
-		{
-			actor: request.actor,
-			timestamp: date.toISOString(),
-			attachEvents: true,
-		},
-		{
-			data: {
-				actor: hubot.id,
-				context: request.logContext,
-				action: 'action-create-event@1.0.0',
-				card: request.arguments.thread,
-				type: 'thread@1.0.0',
-				epoch: date.valueOf(),
-				timestamp: date.toISOString(),
-				input: {
-					id: request.arguments.thread,
-				},
-				arguments: {
-					type: 'whisper',
-					payload: {
-						message,
-					},
-				},
-			},
-		},
+		hubot as UserContract,
+		request.arguments.thread,
+		message,
 	);
 
 	return results;

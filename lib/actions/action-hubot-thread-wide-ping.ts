@@ -197,7 +197,7 @@ const handler: ActionDefinition['handler'] = async (
 		{
 			actor: actor.id,
 			timestamp: date.toISOString(),
-			attachEvents: true,
+			attachEvents: false,
 		},
 		{
 			data: {

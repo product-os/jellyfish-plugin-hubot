@@ -16,7 +16,7 @@ afterAll(() => {
 	return wTestUtils.destroyContext(ctx);
 });
 
-test('responds to timezone requests', async () => {
+test('lists brainstorm hashtags', async () => {
 	// Prepare necessary users
 	const [hubot, balenaOrg] = await Promise.all([
 		ctx.kernel.getContractBySlug(
@@ -34,8 +34,7 @@ test('responds to timezone requests', async () => {
 	assert(balenaOrg, 'org-balena not found');
 	const user = await createUser(ctx, balenaOrg);
 
-	// Test that hubot responds to timezone request messages
-	let thread = await ctx.createContract(
+	const thread = await ctx.createContract(
 		user.id,
 		{ actor: user },
 		'thread@1.0.0',
@@ -46,7 +45,7 @@ test('responds to timezone requests', async () => {
 		user.id,
 		{ actor: user },
 		thread,
-		'@hubot what time is 1pm from London to Athens',
+		'@hubot what are your brainstorm hashtags?',
 		'message',
 	);
 	await ctx.waitForMatch({
@@ -69,62 +68,7 @@ test('responds to timezone requests', async () => {
 						properties: {
 							message: {
 								type: 'string',
-								pattern: '^[0-9]{1,2}:[0-9]{1,2}\\s+[A|P]M$',
-							},
-						},
-					},
-				},
-			},
-		},
-		$$links: {
-			'is attached to': {
-				type: 'object',
-				required: ['id'],
-				properties: {
-					id: {
-						const: thread.id,
-					},
-				},
-			},
-		},
-	});
-
-	// Test that hubot responds to timezone request messages
-	thread = await ctx.createContract(
-		user.id,
-		{ actor: user },
-		'thread@1.0.0',
-		aTestUtils.generateRandomId(),
-		{},
-	);
-	await ctx.createEvent(
-		user.id,
-		{ actor: user },
-		thread,
-		'@hubot what time is 1pm from London to Athens',
-		'whisper',
-	);
-	await ctx.waitForMatch({
-		type: 'object',
-		required: ['type', 'data'],
-		properties: {
-			type: {
-				const: 'whisper@1.0.0',
-			},
-			data: {
-				type: 'object',
-				required: ['actor', 'payload'],
-				properties: {
-					actor: {
-						const: hubot.id,
-					},
-					payload: {
-						type: 'object',
-						required: ['message'],
-						properties: {
-							message: {
-								type: 'string',
-								pattern: '^[0-9]{1,2}:[0-9]{1,2}\\s+[A|P]M$',
+								pattern: 'product-os',
 							},
 						},
 					},

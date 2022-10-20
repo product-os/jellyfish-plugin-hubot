@@ -1,10 +1,11 @@
 import type { ActionDefinition } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
-import type { TypeContract } from 'autumndb';
+import type { TypeContract, UserContract } from 'autumndb';
 import { parseDate } from 'chrono-node';
 import * as _ from 'lodash';
 import { Moment, tz } from 'moment-timezone';
 import * as moment from 'moment';
+import { createWhisper } from './utils';
 
 const DEFAULT_TIMEZONE = 'Europe/London';
 
@@ -95,35 +96,13 @@ const handler: ActionDefinition['handler'] = async (
 		}
 	}
 
-	const date = new Date();
-	await context.insertCard(
-		context.privilegedSession,
+	await createWhisper(
+		request.logContext,
+		context,
 		actionRequest as TypeContract,
-		{
-			actor: hubot.id,
-			timestamp: date.toISOString(),
-			attachEvents: true,
-		},
-		{
-			data: {
-				actor: hubot.id,
-				context: request.logContext,
-				action: 'action-create-event@1.0.0',
-				card: request.arguments.thread,
-				type: 'thread@1.0.0',
-				epoch: date.valueOf(),
-				timestamp: date.toISOString(),
-				input: {
-					id: request.arguments.thread,
-				},
-				arguments: {
-					type: 'whisper',
-					payload: {
-						message: response,
-					},
-				},
-			},
-		},
+		hubot as UserContract,
+		request.arguments.thread,
+		response,
 	);
 
 	return {

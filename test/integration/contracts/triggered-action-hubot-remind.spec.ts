@@ -17,7 +17,7 @@ afterAll(() => {
 
 test('reminders are created', async () => {
 	// Prepare necessary users
-	const [hubot, balenaOrg] = await Promise.all([
+	const [hubot, balenaOrg, user] = await Promise.all([
 		ctx.kernel.getContractBySlug(
 			ctx.logContext,
 			ctx.session,
@@ -28,10 +28,10 @@ test('reminders are created', async () => {
 			ctx.session,
 			'org-balena@1.0.0',
 		),
+		ctx.createUser('foo'),
 	]);
 	assert(hubot, 'user-hubot not found');
 	assert(balenaOrg, 'org-balena not found');
-	const user = ctx.session.actor;
 	await ctx.createLink(balenaOrg, user, 'has member', 'is member of');
 
 	// Create a reminder

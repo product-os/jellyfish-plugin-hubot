@@ -1,7 +1,11 @@
-import { ActionDefinition, createGoogleMeet } from '@balena/jellyfish-worker';
+import type { ActionDefinition } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
 import type { TypeContract, UserContract } from 'autumndb';
 import * as _ from 'lodash';
+import {
+	topicHashtags,
+	topicHashtagsToString,
+} from './action-hubot-brainstorm-hashtags';
 import { createWhisper } from './utils';
 
 const handler: ActionDefinition['handler'] = async (
@@ -19,15 +23,13 @@ const handler: ActionDefinition['handler'] = async (
 	);
 	assert(hubot, 'user-hubot not found');
 
-	// Get a meet
-	const meetUrl = await createGoogleMeet();
 	await createWhisper(
 		request.logContext,
 		context,
 		actionRequest as TypeContract,
 		hubot as UserContract,
 		request.arguments.thread,
-		meetUrl,
+		topicHashtagsToString(topicHashtags),
 	);
 
 	return {
@@ -38,10 +40,10 @@ const handler: ActionDefinition['handler'] = async (
 	};
 };
 
-export const actionHubotMeet: ActionDefinition = {
+export const actionHubotListBrainstormHashtags: ActionDefinition = {
 	handler,
 	contract: {
-		slug: 'action-hubot-meet',
+		slug: 'action-hubot-list-brainstorm-hashtags',
 		version: '1.0.0',
 		type: 'action@1.0.0',
 		data: {

@@ -1,6 +1,7 @@
 import type { ActionDefinition } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
-import type { TypeContract } from 'autumndb';
+import type { TypeContract, UserContract } from 'autumndb';
+import { createWhisper } from './utils';
 
 const message = `\`#<inbox> <subject>\` - sends an email to the specified inbox, with a link back to the thread
 \`#<tag> <subject>\` - creates a brainstorm-topic contract, with a link back to the thread
@@ -33,35 +34,13 @@ const handler: ActionDefinition['handler'] = async (
 	);
 	assert(hubot, 'user-hubot not found');
 
-	const date = new Date();
-	await context.insertCard(
-		context.privilegedSession,
+	await createWhisper(
+		request.logContext,
+		context,
 		actionRequest as TypeContract,
-		{
-			actor: hubot.id,
-			timestamp: date.toISOString(),
-			attachEvents: true,
-		},
-		{
-			data: {
-				actor: hubot.id,
-				context: request.logContext,
-				action: 'action-create-event@1.0.0',
-				card: request.arguments.thread,
-				type: 'thread@1.0.0',
-				epoch: date.valueOf(),
-				timestamp: date.toISOString(),
-				input: {
-					id: request.arguments.thread,
-				},
-				arguments: {
-					type: 'whisper',
-					payload: {
-						message,
-					},
-				},
-			},
-		},
+		hubot as UserContract,
+		request.arguments.thread,
+		message,
 	);
 
 	return {
