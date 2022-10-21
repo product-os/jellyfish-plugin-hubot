@@ -1,4 +1,18 @@
 - commits:
+    - subject: Add brainstorm hashtag function
+      hash: 6033b4b31be6f9fc07d8d367f707813bc79ff58f
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.11.0
+  title: ""
+  date: 2022-10-21T03:49:28.444Z
+- commits:
     - subject: Add help command
       hash: 1191c748661cd068a86fc7823ccc43dafadaea39
       body: ""

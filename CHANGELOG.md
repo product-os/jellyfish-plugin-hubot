@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.11.0 - 2022-10-21
+
+* Add brainstorm hashtag function [Josh Bowling]
+
 ## 0.10.0 - 2022-10-19
 
 * Add help command [Josh Bowling]
