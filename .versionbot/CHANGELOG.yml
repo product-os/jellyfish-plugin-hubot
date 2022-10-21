@@ -1,4 +1,18 @@
 - commits:
+    - subject: Fix user list/ping logic for support
+      hash: 89bba83b113d48298ce36c841fce3e54edc5806e
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.12.1
+  title: ""
+  date: 2022-10-21T10:52:09.432Z
+- commits:
     - subject: Add support mentions support
       hash: 005d255c987394f17f20108c09462933b4b44557
       body: ""

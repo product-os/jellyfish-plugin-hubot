@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.12.1 - 2022-10-21
+
+* Fix user list/ping logic for support [Josh Bowling]
+
 ## 0.12.0 - 2022-10-21
 
 * Add support mentions support [Josh Bowling]
