@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.12.0 - 2022-10-21
+
+* Add support mentions support [Josh Bowling]
+
 ## 0.11.1 - 2022-10-21
 
 * Update help output [Josh Bowling]
