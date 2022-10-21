@@ -9,6 +9,7 @@ import { actionHubotListBrainstormHashtags } from './action-hubot-list-brainstor
 import { actionHubotMeet } from './action-hubot-meet';
 import { actionHubotRemind } from './action-hubot-remind';
 import { actionHubotSupportList } from './action-hubot-support-list';
+import { actionHubotSupportMentions } from './action-hubot-support-mentions';
 import { actionHubotSupportNotify } from './action-hubot-support-notify';
 import { actionHubotThreadWidePing } from './action-hubot-thread-wide-ping';
 import { actionHubotTimezone } from './action-hubot-timezone';
@@ -24,6 +25,7 @@ export const actions: ActionDefinition[] = [
 	actionHubotMeet,
 	actionHubotRemind,
 	actionHubotSupportList,
+	actionHubotSupportMentions,
 	actionHubotSupportNotify,
 	actionHubotThreadWidePing,
 	actionHubotTimezone,
