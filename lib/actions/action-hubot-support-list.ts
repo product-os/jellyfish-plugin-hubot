@@ -4,7 +4,7 @@ import { strict as assert } from 'assert';
 import type { TypeContract, UserContract } from 'autumndb';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { fetchCalendarEvents } from './calendar-utils';
+import { createWhisper, fetchCalendarEvents } from './utils';
 import { getBalenaUsers } from '../calamari';
 
 const env = defaultEnvironment.hubot.support;
@@ -147,36 +147,14 @@ const handler: ActionDefinition['handler'] = async (
 	const timeframe = parseTimeframe((contract.data.payload as any).message);
 	const response = await makeListMessage(users, timeframe);
 
-	// Send the message to the support thread
-	const date = new Date();
-	await context.insertCard(
-		context.privilegedSession,
+	// Send whisper to thread
+	await createWhisper(
+		request.logContext,
+		context,
 		actionRequest as TypeContract,
-		{
-			actor: hubot.id,
-			timestamp: date.toISOString(),
-			attachEvents: true,
-		},
-		{
-			data: {
-				actor: hubot.id,
-				context: request.logContext,
-				action: 'action-create-event@1.0.0',
-				card: request.arguments.thread,
-				type: 'thread@1.0.0',
-				epoch: date.valueOf(),
-				timestamp: date.toISOString(),
-				input: {
-					id: request.arguments.thread,
-				},
-				arguments: {
-					type: 'whisper',
-					payload: {
-						message: response,
-					},
-				},
-			},
-		},
+		hubot as UserContract,
+		request.arguments.thread,
+		response,
 	);
 
 	return {

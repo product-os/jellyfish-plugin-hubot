@@ -2,13 +2,13 @@ import { defaultEnvironment } from '@balena/jellyfish-environment';
 import { getLogger } from '@balena/jellyfish-logger';
 import type { ActionDefinition } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
-import type { TypeContract } from 'autumndb';
+import type { TypeContract, UserContract } from 'autumndb';
 import { calendar_v3 } from 'googleapis';
 import * as _ from 'lodash';
 import * as LRU from 'lru-cache';
 import * as moment from 'moment';
 import { stripHtml } from 'string-strip-html';
-import { fetchCalendarEvents } from './calendar-utils';
+import { createWhisper, fetchCalendarEvents } from './utils';
 
 const logger = getLogger(__filename);
 const calendarId = defaultEnvironment.hubot.calendar.id;
@@ -114,35 +114,13 @@ const handler: ActionDefinition['handler'] = async (
 				const text = `${event.summary} ${timeSummary}\n--\n${ping}\n${description}`;
 
 				// Ping about upcoming event
-				const date = new Date();
-				await context.insertCard(
-					context.privilegedSession,
+				await createWhisper(
+					request.logContext,
+					context,
 					actionRequest as TypeContract,
-					{
-						actor: hubot.id,
-						timestamp: date.toISOString(),
-						attachEvents: true,
-					},
-					{
-						data: {
-							actor: hubot.id,
-							context: request.logContext,
-							action: 'action-create-event@1.0.0',
-							card: thread,
-							type: 'thread@1.0.0',
-							epoch: date.valueOf(),
-							timestamp: date.toISOString(),
-							input: {
-								id: thread,
-							},
-							arguments: {
-								type: 'whisper',
-								payload: {
-									message: text.trim(),
-								},
-							},
-						},
-					},
+					hubot as UserContract,
+					thread,
+					text.trim(),
 				);
 			}
 		}

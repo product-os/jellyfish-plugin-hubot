@@ -27,29 +27,30 @@ test('Should returns expected list of users on support', async () => {
 		.reply(200, {});
 
 	// Prepare necessary contracts
-	const [hubot, balenaOrg, userFoo, userBar, userBuz] = await Promise.all([
-		ctx.kernel.getContractBySlug(
-			ctx.logContext,
-			ctx.session,
-			'user-hubot@latest',
-		),
-		ctx.kernel.getContractBySlug(
-			ctx.logContext,
-			ctx.session,
-			'org-balena@latest',
-		),
-		ctx.createUser('foo'),
-		ctx.createUser('bar'),
-		ctx.createUser('buz'),
-	]);
+	const [hubot, balenaOrg, userFoo, userBar, userBuz, userBaz] =
+		await Promise.all([
+			ctx.kernel.getContractBySlug(
+				ctx.logContext,
+				ctx.session,
+				'user-hubot@latest',
+			),
+			ctx.kernel.getContractBySlug(
+				ctx.logContext,
+				ctx.session,
+				'org-balena@latest',
+			),
+			ctx.createUser('foo'),
+			ctx.createUser('bar'),
+			ctx.createUser('buz'),
+			ctx.createUser('baz'),
+		]);
 	assert(hubot, 'hubot user not found');
 	assert(balenaOrg, 'org-balena not found');
-	const user = ctx.session.actor;
 	await Promise.all([
-		ctx.createLink(balenaOrg, user, 'has member', 'is member of'),
 		ctx.createLink(balenaOrg, userFoo, 'has member', 'is member of'),
 		ctx.createLink(balenaOrg, userBar, 'has member', 'is member of'),
 		ctx.createLink(balenaOrg, userBuz, 'has member', 'is member of'),
+		ctx.createLink(balenaOrg, userBaz, 'has member', 'is member of'),
 	]);
 	await Promise.all(
 		['foo', 'bar', 'buz'].map(async (name) => {
@@ -76,15 +77,15 @@ test('Should returns expected list of users on support', async () => {
 
 	// Request list of users currently on support
 	const thread = await ctx.createContract(
-		user.id,
-		{ actor: user },
+		userBaz.id,
+		{ actor: userBaz },
 		'thread@1.0.0',
 		aTestUtils.generateRandomId(),
 		{},
 	);
 	await ctx.createEvent(
-		user.id,
-		{ actor: user },
+		userBaz.id,
+		{ actor: userBaz },
 		thread,
 		'@hubot whos on support?',
 		'message',
@@ -163,8 +164,8 @@ test('Should returns expected list of users on support', async () => {
 
 	// Request list of users currently on support
 	await ctx.createEvent(
-		user.id,
-		{ actor: user },
+		userBaz.id,
+		{ actor: userBaz },
 		thread,
 		'@hubot whos on support?',
 		'message',
@@ -213,8 +214,8 @@ test('Should returns expected list of users on support', async () => {
 
 	// Check that tomorrow queries return the expected response
 	await ctx.createEvent(
-		user.id,
-		{ actor: user },
+		userBaz.id,
+		{ actor: userBaz },
 		thread,
 		'@hubot whos on support tomorrow?',
 		'message',

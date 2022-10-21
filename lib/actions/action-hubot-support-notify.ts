@@ -6,7 +6,7 @@ import { calendar_v3 } from 'googleapis';
 import * as _ from 'lodash';
 import * as LRU from 'lru-cache';
 import * as moment from 'moment';
-import { fetchCalendarEvents } from './calendar-utils';
+import { createWhisper, fetchCalendarEvents } from './utils';
 import { getBalenaUsers } from '../calamari';
 
 const env = defaultEnvironment.hubot.support;
@@ -235,12 +235,11 @@ const handler: ActionDefinition['handler'] = async (
 	// Get required contracts
 	const actionRequest = context.cards['action-request@1.0.0'] as TypeContract;
 	assert(actionRequest, 'action-request type not found');
-	const [hubot, thread] = await Promise.all([
-		context.getCardBySlug(context.privilegedSession, 'user-hubot@1.0.0'),
-		context.getCardById(context.privilegedSession, request.arguments.thread),
-	]);
+	const hubot = await context.getCardBySlug(
+		context.privilegedSession,
+		'user-hubot@1.0.0',
+	);
 	assert(hubot, 'user-hubot not found');
-	assert(thread, `thread contract not found: ${request.arguments.thread}`);
 
 	// Get balena users
 	const users = await getBalenaUsers(context);
@@ -250,35 +249,13 @@ const handler: ActionDefinition['handler'] = async (
 
 	// Send the notification message if necessary
 	if (message) {
-		const date = new Date();
-		await context.insertCard(
-			context.privilegedSession,
+		await createWhisper(
+			request.logContext,
+			context,
 			actionRequest as TypeContract,
-			{
-				actor: hubot.id,
-				timestamp: date.toISOString(),
-				attachEvents: true,
-			},
-			{
-				data: {
-					actor: hubot.id,
-					context: request.logContext,
-					action: 'action-create-event@1.0.0',
-					card: thread.id,
-					type: 'thread@1.0.0',
-					epoch: date.valueOf(),
-					timestamp: date.toISOString(),
-					input: {
-						id: thread.id,
-					},
-					arguments: {
-						type: 'whisper',
-						payload: {
-							message,
-						},
-					},
-				},
-			},
+			hubot as UserContract,
+			request.arguments.thread,
+			message,
 		);
 	}
 

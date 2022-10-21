@@ -5,6 +5,7 @@ import type { TypeContract, UserContract } from 'autumndb';
 import * as chrono from 'chrono-node';
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
+import { createWhisper } from './utils';
 
 const logger = getLogger(__filename);
 
@@ -164,7 +165,7 @@ const handler: ActionDefinition['handler'] = async (
 	}
 
 	// Perform some intermediary calculations on the reminder object
-	const reminderDate = chrono.parseDate(time);
+	const date = chrono.parseDate(time);
 
 	// Create the deferred reminder
 	await scheduleReminder(
@@ -173,44 +174,22 @@ const handler: ActionDefinition['handler'] = async (
 		actionRequest as TypeContract,
 		scheduledAction as TypeContract,
 		hubot as UserContract,
-		reminderDate,
+		date,
 		request.arguments.thread,
 		`Hey @${sender.slug.replace(/^user-/, '')} remember ${action}`,
 	);
 
 	// Send reminder confirmation whisper to user
-	const date = new Date();
-	await context.insertCard(
-		context.privilegedSession,
+	await createWhisper(
+		request.logContext,
+		context,
 		actionRequest as TypeContract,
-		{
-			actor: hubot.id,
-			timestamp: date.toISOString(),
-			attachEvents: true,
-		},
-		{
-			data: {
-				actor: hubot.id,
-				context: request.logContext,
-				action: 'action-create-event@1.0.0',
-				card: request.arguments.thread,
-				type: 'thread@1.0.0',
-				epoch: date.valueOf(),
-				timestamp: date.toISOString(),
-				input: {
-					id: request.arguments.thread,
-				},
-				arguments: {
-					type: 'whisper',
-					payload: {
-						message: `Got it, will remind ${sender.slug.replace(
-							/^user-/,
-							'',
-						)} on ${reminderDate.toISOString()} ${action}`,
-					},
-				},
-			},
-		},
+		hubot as UserContract,
+		request.arguments.thread,
+		`Got it, will remind ${sender.slug.replace(
+			/^user-/,
+			'',
+		)} on ${date.toISOString()} ${action}`,
 	);
 
 	return results;

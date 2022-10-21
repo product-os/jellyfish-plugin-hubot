@@ -174,7 +174,7 @@ test('responds when people are on leave', async () => {
 						required: ['message'],
 						properties: {
 							message: {
-								pattern: 'is on leave, returning to work tomorrow',
+								pattern: 'is on leave, returning to work',
 							},
 						},
 					},
@@ -185,10 +185,7 @@ test('responds when people are on leave', async () => {
 	const message = (match.data.payload as any).message;
 	expect(
 		message.includes(
-			`${userBar.slug.replace(
-				/^user-/,
-				'',
-			)} is on leave, returning to work tomorrow`,
+			`${userBar.slug.replace(/^user-/, '')} is on leave, returning to work`,
 		),
 	).toBe(true);
 
@@ -222,7 +219,7 @@ test('responds when people are on leave', async () => {
 								pattern: `${userBar.slug.replace(
 									/^user-/,
 									'',
-								)} is on leave today, returning to work tomorrow`,
+								)} is on leave today, returning to work`,
 							},
 						},
 					},
