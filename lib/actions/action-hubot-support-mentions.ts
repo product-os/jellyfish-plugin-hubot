@@ -29,7 +29,7 @@ const handler: ActionDefinition['handler'] = async (
 		const slots = await fetchSupportSlots(users, match[1]);
 		const targets: string[] = [];
 		for (const slot of slots) {
-			targets.push(`@${slot.summary.split(' ')[0]}`);
+			targets.push(slot.summary.split(' ')[0]);
 		}
 
 		// Replace support mention with targets

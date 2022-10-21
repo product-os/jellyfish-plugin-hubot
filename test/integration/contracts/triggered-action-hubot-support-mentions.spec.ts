@@ -78,7 +78,7 @@ test('Should ping those on support', async () => {
 			kind: 'calendar#events',
 			items: ['foo', 'bar', 'buz'].map((name) => {
 				return {
-					summary: `${name} on support`,
+					summary: `@${name} on support`,
 					start: {
 						dateTime:
 							name === 'buz'
