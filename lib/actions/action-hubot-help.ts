@@ -7,14 +7,11 @@ const message = `\`#<inbox> <subject>\` - sends an email to the specified inbox,
 \`#<tag> <subject>\` - creates a brainstorm-topic contract, with a link back to the thread
 \`@hubot echo test\` - echos a given message
 \`@hubot help\` - show command usage help
-\`@hubot remind <user> in|on <time> to <do something>\` - create a reminder for the future
+\`@hubot remind me in|on <time> to <do something>\` - create a reminder for the future
 \`@hubot what time is 1pm from London to Athens\` - will tell you the converted time
-\`@hubot what time is 1pm in Athens\` - will tell you the converted time
-\`@hubot what time is it in Athens\` - will tell you the current time, converted
-\`@hubot who's off today\` - responds with the names of the people that are on leave and the date of their return
-\`@hubot who's on support\` - responds with the person in support at this specific time
-\`@hubot, what are your brainstorm hashtags\` - lists the brainstorm hashtags and corresponding topic categories
-\`@hubot, what are your hashtags\` - lists the inboxes that Hubot is configured to send hashtags to
+\`@hubot whos off today\` - responds with the names of the people that are on leave and the date of their return
+\`@hubot whos on support\` - responds with the person in support at this specific time
+\`@hubot what are your brainstorm hashtags\` - lists the brainstorm hashtags and corresponding topic categories
 \`@support-now\` - pings everyone on support right now
 \`@support-today\` - pings everyone on support today
 \`get a meet\` - responds with a link to a Google meet`;
