@@ -1,4 +1,18 @@
 - commits:
+    - subject: Update help output
+      hash: 2da775d6b868eab3ab0fdc74f4e931e1e3101650
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.11.1
+  title: ""
+  date: 2022-10-21T07:19:49.573Z
+- commits:
     - subject: Add brainstorm hashtag function
       hash: 6033b4b31be6f9fc07d8d367f707813bc79ff58f
       body: ""
