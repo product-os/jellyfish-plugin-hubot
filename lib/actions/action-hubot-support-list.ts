@@ -110,7 +110,7 @@ export async function makeListMessage(
 	timeframe: string,
 ): Promise<string> {
 	const slots = await fetchSupportSlots(users, timeframe);
-	let message = 'No one is on support at the moment';
+	let message = 'No one is on support';
 
 	const output: string[] = [];
 	for (const slot of slots) {
