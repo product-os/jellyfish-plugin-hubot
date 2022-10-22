@@ -111,7 +111,7 @@ test('Should returns expected list of users on support', async () => {
 						required: ['message'],
 						properties: {
 							message: {
-								const: 'No one is on support at the moment',
+								const: 'No one is on support',
 							},
 						},
 					},
