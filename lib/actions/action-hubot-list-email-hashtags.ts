@@ -1,11 +1,10 @@
+import { defaultEnvironment } from '@balena/jellyfish-environment';
 import type { ActionDefinition } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
 import type { TypeContract, UserContract } from 'autumndb';
-import {
-	topicHashtags,
-	topicHashtagsToString,
-} from './action-hubot-brainstorm-hashtags';
 import { createWhisper } from './utils';
+
+const env = defaultEnvironment.hubot.emailHashtags;
 
 const handler: ActionDefinition['handler'] = async (
 	_session,
@@ -22,13 +21,19 @@ const handler: ActionDefinition['handler'] = async (
 	);
 	assert(hubot, 'user-hubot not found');
 
+	const list: string[] = [];
+	const hashtags = JSON.parse(env.hashtags);
+	for (const hashtag of Object.keys(hashtags)) {
+		list.push(`${hashtag}: ${hashtags[hashtag]}@${env.domain}`);
+	}
+
 	await createWhisper(
 		request.logContext,
 		context,
 		actionRequest as TypeContract,
 		hubot as UserContract,
 		request.arguments.thread,
-		topicHashtagsToString(topicHashtags),
+		list.join('\n'),
 	);
 
 	return {
@@ -39,10 +44,10 @@ const handler: ActionDefinition['handler'] = async (
 	};
 };
 
-export const actionHubotListBrainstormHashtags: ActionDefinition = {
+export const actionHubotListEmailHashtags: ActionDefinition = {
 	handler,
 	contract: {
-		slug: 'action-hubot-list-brainstorm-hashtags',
+		slug: 'action-hubot-list-email-hashtags',
 		version: '1.0.0',
 		type: 'action@1.0.0',
 		data: {

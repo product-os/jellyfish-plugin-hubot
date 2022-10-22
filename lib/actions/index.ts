@@ -6,6 +6,7 @@ import { actionHubotEmailHashtags } from './action-hubot-email-hashtags';
 import { actionHubotHelp } from './action-hubot-help';
 import { actionHubotLeave } from './action-hubot-leave';
 import { actionHubotListBrainstormHashtags } from './action-hubot-list-brainstorm-hashtags';
+import { actionHubotListEmailHashtags } from './action-hubot-list-email-hashtags';
 import { actionHubotMeet } from './action-hubot-meet';
 import { actionHubotRemind } from './action-hubot-remind';
 import { actionHubotSupportList } from './action-hubot-support-list';
@@ -22,6 +23,7 @@ export const actions: ActionDefinition[] = [
 	actionHubotHelp,
 	actionHubotLeave,
 	actionHubotListBrainstormHashtags,
+	actionHubotListEmailHashtags,
 	actionHubotMeet,
 	actionHubotRemind,
 	actionHubotSupportList,

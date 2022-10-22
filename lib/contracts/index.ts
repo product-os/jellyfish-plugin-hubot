@@ -7,6 +7,7 @@ import { triggeredActionHubotEmailHashtags } from './triggered-action-hubot-emai
 import { triggeredActionHubotHelp } from './triggered-action-hubot-help';
 import { triggeredActionHubotLeave } from './triggered-action-hubot-leave';
 import { triggeredActionHubotListBrainstormHashtags } from './triggered-action-hubot-list-brainstorm-hashtags';
+import { triggeredActionHubotListEmailHashtags } from './triggered-action-hubot-list-email-hashtags';
 import { triggeredActionHubotMeet } from './triggered-action-hubot-meet';
 import { triggeredActionHubotRemind } from './triggered-action-hubot-remind';
 import { triggeredActionHubotSupportList } from './triggered-action-hubot-support-list';
@@ -23,6 +24,7 @@ export const contracts: ContractDefinition[] = [
 	triggeredActionHubotHelp,
 	triggeredActionHubotLeave,
 	triggeredActionHubotListBrainstormHashtags,
+	triggeredActionHubotListEmailHashtags,
 	triggeredActionHubotMeet,
 	triggeredActionHubotRemind,
 	triggeredActionHubotSupportList,

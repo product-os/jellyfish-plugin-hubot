@@ -11,7 +11,8 @@ const message = `\`#<inbox> <subject>\` - sends an email to the specified inbox,
 \`@hubot what time is 1pm from London to Athens\` - will tell you the converted time
 \`@hubot whos off today\` - responds with the names of the people that are on leave and the date of their return
 \`@hubot whos on support\` - responds with the person in support at this specific time
-\`@hubot what are your brainstorm hashtags\` - lists the brainstorm hashtags and corresponding topic categories
+\`@hubot what are your brainstorm hashtags\` - lists brainstorm hashtags and corresponding topic categories
+\`@hubot what are your email hashtags\` - lists email hashtags and corresponding email addresses
 \`@support-now\` - pings everyone on support right now
 \`@support-today\` - pings everyone on support today
 \`get a meet\` - responds with a link to a Google meet`;
