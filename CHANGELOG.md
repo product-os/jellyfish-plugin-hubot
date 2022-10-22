@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.12.2 - 2022-10-22
+
+* Improve 'no one on support' message [Josh Bowling]
+
 ## 0.12.1 - 2022-10-21
 
 * Fix user list/ping logic for support [Josh Bowling]

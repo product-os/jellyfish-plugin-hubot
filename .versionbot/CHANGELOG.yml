@@ -1,4 +1,18 @@
 - commits:
+    - subject: Improve 'no one on support' message
+      hash: c3612dc4dc983242498269cb5a38c36f18c6754d
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.12.2
+  title: ""
+  date: 2022-10-22T02:11:00.269Z
+- commits:
     - subject: Fix user list/ping logic for support
       hash: 89bba83b113d48298ce36c841fce3e54edc5806e
       body: ""
