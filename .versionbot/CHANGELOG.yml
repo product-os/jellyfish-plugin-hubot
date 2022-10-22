@@ -1,4 +1,18 @@
 - commits:
+    - subject: Add email hashtag list function
+      hash: fd47cc40dd64b5e5b8ab2e5423213b0c9afef803
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.13.0
+  title: ""
+  date: 2022-10-22T03:12:47.038Z
+- commits:
     - subject: Improve 'no one on support' message
       hash: c3612dc4dc983242498269cb5a38c36f18c6754d
       body: ""

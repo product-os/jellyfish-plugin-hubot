@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.13.0 - 2022-10-22
+
+* Add email hashtag list function [Josh Bowling]
+
 ## 0.12.2 - 2022-10-22
 
 * Improve 'no one on support' message [Josh Bowling]
