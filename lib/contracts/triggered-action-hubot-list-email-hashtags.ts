@@ -1,10 +1,10 @@
 import type { TriggeredActionContractDefinition } from '@balena/jellyfish-worker';
 
-export const triggeredActionHubotListBrainstormHashtags: TriggeredActionContractDefinition =
+export const triggeredActionHubotListEmailHashtags: TriggeredActionContractDefinition =
 	{
-		slug: 'triggered-action-hubot-list-brainstorm-hashtags',
+		slug: 'triggered-action-hubot-list-email-hashtags',
 		type: 'triggered-action@1.0.0',
-		name: 'Triggered action for hubot listing brainstorm hashtags',
+		name: 'Triggered action for hubot listing email hashtags',
 		markers: [],
 		data: {
 			filter: {
@@ -68,7 +68,7 @@ export const triggeredActionHubotListBrainstormHashtags: TriggeredActionContract
 									message: {
 										type: 'string',
 										pattern:
-											'^@hubot\\s+what\\s+are\\s+your\\s+brainstorm\\s+hashtags',
+											'^@hubot\\s+what\\s+are\\s+your\\s+email\\s+hashtags',
 									},
 								},
 							},
@@ -76,7 +76,7 @@ export const triggeredActionHubotListBrainstormHashtags: TriggeredActionContract
 					},
 				},
 			},
-			action: 'action-hubot-list-brainstorm-hashtags@1.0.0',
+			action: 'action-hubot-list-email-hashtags@1.0.0',
 			target: {
 				$eval: 'source.id',
 			},
