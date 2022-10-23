@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.13.1 - 2022-10-23
+
+* Update jellyfish-environment to 14.4.4 [Josh Bowling]
+
 ## 0.13.0 - 2022-10-22
 
 * Add email hashtag list function [Josh Bowling]

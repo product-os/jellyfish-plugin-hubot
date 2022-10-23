@@ -1,4 +1,18 @@
 - commits:
+    - subject: Update jellyfish-environment to 14.4.4
+      hash: b404072cf3d80a57ea6b8ab949681374ec14469c
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.13.1
+  title: ""
+  date: 2022-10-23T09:56:09.119Z
+- commits:
     - subject: Add email hashtag list function
       hash: fd47cc40dd64b5e5b8ab2e5423213b0c9afef803
       body: ""
