@@ -96,7 +96,7 @@ const handler: ActionDefinition['handler'] = async (
 	logger.debug(request.logContext, 'Checking for events to notify');
 	const events = await fetchCalendarEvents(jwt.client_email, jwt.private_key, {
 		calendarId,
-		timeMax: moment().add(lookahead, 'hour').toISOString(),
+		timeMax: moment().add(lookahead, 'minutes').toISOString(),
 	});
 	if (events && events.length > 0) {
 		for (const event of events) {

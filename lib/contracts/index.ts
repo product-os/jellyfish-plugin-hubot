@@ -1,7 +1,5 @@
 import type { ContractDefinition } from 'autumndb';
 import { triggeredActionHubotBrainstormHashtags } from './triggered-action-hubot-brainstorm-hashtags';
-import { scheduledActionHubotCalendar } from './scheduled-action-hubot-calendar';
-import { scheduledActionHubotSupportNotify } from './scheduled-action-hubot-support-notify';
 import { triggeredActionHubotEcho } from './triggered-action-hubot-echo';
 import { triggeredActionHubotEmailHashtags } from './triggered-action-hubot-email-hashtags';
 import { triggeredActionHubotHelp } from './triggered-action-hubot-help';
@@ -17,8 +15,6 @@ import { triggeredActionHubotThreadWidePing } from './triggered-action-hubot-thr
 
 export const contracts: ContractDefinition[] = [
 	triggeredActionHubotBrainstormHashtags,
-	scheduledActionHubotCalendar,
-	scheduledActionHubotSupportNotify,
 	triggeredActionHubotEcho,
 	triggeredActionHubotEmailHashtags,
 	triggeredActionHubotHelp,
