@@ -1,4 +1,18 @@
 - commits:
+    - subject: Use contract to track notifications
+      hash: bb4037a993112557557198ca151c329f449b7a64
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.14.0
+  title: ""
+  date: 2022-10-24T09:03:06.336Z
+- commits:
     - subject: Set calendar thread as arg
       hash: b2cf1a792d320dd1229526daf7c68598896156e2
       body: ""

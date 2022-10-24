@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.14.0 - 2022-10-24
+
+* Use contract to track notifications [Josh Bowling]
+
 ## 0.13.4 - 2022-10-24
 
 * Set calendar thread as arg [Josh Bowling]
