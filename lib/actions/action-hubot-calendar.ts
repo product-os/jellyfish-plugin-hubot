@@ -16,7 +16,6 @@ const ignore = JSON.parse(defaultEnvironment.hubot.calendar.ignore);
 const jwt = JSON.parse(defaultEnvironment.hubot.calendar.jwt);
 const lookahead = defaultEnvironment.hubot.calendar.lookahead;
 const ping = defaultEnvironment.hubot.calendar.ping;
-const thread = defaultEnvironment.hubot.calendar.thread;
 
 // Define cache to hold notified events
 const NOTIFIED_CACHE = new LRU({
@@ -119,7 +118,7 @@ const handler: ActionDefinition['handler'] = async (
 					context,
 					actionRequest as TypeContract,
 					hubot as UserContract,
-					thread,
+					request.arguments.thread,
 					text.trim(),
 				);
 			}
