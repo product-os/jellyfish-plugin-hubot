@@ -1,4 +1,18 @@
 - commits:
+    - subject: "Docs: Remove badge from readme"
+      hash: c37e9411c0119b1f944984cc7abd9f90bc79602c
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.13.2
+  title: ""
+  date: 2022-10-24T02:19:37.697Z
+- commits:
     - subject: Update jellyfish-environment to 14.4.4
       hash: b404072cf3d80a57ea6b8ab949681374ec14469c
       body: ""
