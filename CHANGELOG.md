@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.13.3 - 2022-10-24
+
+* Update calendar/support lookahead [Josh Bowling]
+
 ## 0.13.2 - 2022-10-24
 
 * Docs: Remove badge from readme [Josh Bowling]
