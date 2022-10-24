@@ -1,31 +1,19 @@
 import { defaultEnvironment } from '@balena/jellyfish-environment';
-import type { ActionDefinition } from '@balena/jellyfish-worker';
+import type { ActionDefinition, WorkerContext } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
 import type { TypeContract, UserContract } from 'autumndb';
 import { calendar_v3 } from 'googleapis';
 import * as _ from 'lodash';
-import * as LRU from 'lru-cache';
 import * as moment from 'moment';
-import { createWhisper, fetchCalendarEvents } from './utils';
+import {
+	createNotification,
+	createWhisper,
+	fetchCalendarEvents,
+	wasNotified,
+} from './utils';
 import { getBalenaUsers } from '../calamari';
 
 const env = defaultEnvironment.hubot.support;
-
-// Local cache to keep track of notified shift starts/ends
-const NOTIFIED_START_CACHE = new LRU({
-	max: 200,
-	ttl: 1000 * 60 * 60,
-	allowStale: false,
-	updateAgeOnGet: false,
-	updateAgeOnHas: false,
-});
-const NOTIFIED_END_CACHE = new LRU({
-	max: 200,
-	ttl: 1000 * 60 * 60,
-	allowStale: false,
-	updateAgeOnGet: false,
-	updateAgeOnHas: false,
-});
 
 interface TemplateObject {
 	summary: string;
@@ -128,6 +116,8 @@ export function isSoonIsh(date: calendar_v3.Schema$EventDateTime): boolean {
  * @returns notification message, or undefined if no message is needed
  */
 async function makeHandoverMessage(
+	context: WorkerContext,
+	hubot: UserContract,
 	users: UserContract[],
 ): Promise<string | undefined> {
 	// Retrieve the first page of events from the calendar
@@ -153,19 +143,26 @@ async function makeHandoverMessage(
 	// If we've an event soon then notify about events that are soon-ish
 	// This means that events that are close to each other get bundled into one notification
 	if (eventsToNotify.length > 0) {
-		// Create a list of those events that are ending soon-ish, and that we haven't outputted yet
-		const endsToNotify = events.filter((event) => {
-			if (event.end) {
-				return isSoonIsh(event.end) && !NOTIFIED_END_CACHE.has(event.id);
+		// Create a list of those events that are starting/ending soon-ish, and that we haven't notified yet
+		const startsToNotify: calendar_v3.Schema$Event[] = [];
+		const endsToNotify: calendar_v3.Schema$Event[] = [];
+		for (const event of events) {
+			if (event.id) {
+				if (
+					event.start &&
+					isSoonIsh(event.start) &&
+					!(await wasNotified(context, event.id, 'start'))
+				) {
+					startsToNotify.push(event);
+				} else if (
+					event.end &&
+					isSoonIsh(event.end) &&
+					!(await wasNotified(context, event.id, 'end'))
+				) {
+					endsToNotify.push(event);
+				}
 			}
-		});
-
-		// Create a list of those events that are starting soon-ish, and that we haven't outputted yet
-		const startsToNotify = events.filter((event) => {
-			if (event.start) {
-				return isSoonIsh(event.start) && !NOTIFIED_START_CACHE.has(event.id);
-			}
-		});
+		}
 
 		// Stash a calculated string from each startToNotify and endToNotify
 		const output: string[] = [];
@@ -216,10 +213,19 @@ async function makeHandoverMessage(
 		// If there's any output, then do it and track same
 		if (output.length > 0) {
 			for (const event of startsToNotify) {
-				NOTIFIED_START_CACHE.set(event.id, true);
+				if (event.id) {
+					await createNotification(
+						{ actor: hubot },
+						context,
+						event.id,
+						'start',
+					);
+				}
 			}
 			for (const event of endsToNotify) {
-				NOTIFIED_END_CACHE.set(event.id, true);
+				if (event.id) {
+					await createNotification({ actor: hubot }, context, event.id, 'end');
+				}
 			}
 			return output.join('\r\n\r\n');
 		}
@@ -245,7 +251,11 @@ const handler: ActionDefinition['handler'] = async (
 	const users = await getBalenaUsers(context);
 
 	// Make notification message
-	const message = await makeHandoverMessage(users);
+	const message = await makeHandoverMessage(
+		context,
+		hubot as UserContract,
+		users,
+	);
 
 	// Send the notification message if necessary
 	if (message) {

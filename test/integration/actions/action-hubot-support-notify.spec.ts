@@ -88,6 +88,7 @@ test('Should send support handover message', async () => {
 			kind: 'calendar#events',
 			items: ['foo', 'bar', 'buz', 'baz'].map((name) => {
 				return {
+					id: aTestUtils.generateRandomId(),
 					summary: `${name} on support`,
 					start: {
 						dateTime:
