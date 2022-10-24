@@ -1,4 +1,18 @@
 - commits:
+    - subject: Set calendar thread as arg
+      hash: b2cf1a792d320dd1229526daf7c68598896156e2
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.13.4
+  title: ""
+  date: 2022-10-24T06:01:29.964Z
+- commits:
     - subject: Update calendar/support lookahead
       hash: 6c2dc0f2f62010446ceb3bd2a67209da508eaefa
       body: ""
