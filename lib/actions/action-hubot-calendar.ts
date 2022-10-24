@@ -1,14 +1,18 @@
 import { defaultEnvironment } from '@balena/jellyfish-environment';
 import { getLogger } from '@balena/jellyfish-logger';
-import type { ActionDefinition } from '@balena/jellyfish-worker';
+import type { ActionDefinition, WorkerContext } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
 import type { TypeContract, UserContract } from 'autumndb';
 import { calendar_v3 } from 'googleapis';
 import * as _ from 'lodash';
-import * as LRU from 'lru-cache';
 import * as moment from 'moment';
 import { stripHtml } from 'string-strip-html';
-import { createWhisper, fetchCalendarEvents } from './utils';
+import {
+	createNotification,
+	createWhisper,
+	fetchCalendarEvents,
+	wasNotified,
+} from './utils';
 
 const logger = getLogger(__filename);
 const calendarId = defaultEnvironment.hubot.calendar.id;
@@ -16,15 +20,6 @@ const ignore = JSON.parse(defaultEnvironment.hubot.calendar.ignore);
 const jwt = JSON.parse(defaultEnvironment.hubot.calendar.jwt);
 const lookahead = defaultEnvironment.hubot.calendar.lookahead;
 const ping = defaultEnvironment.hubot.calendar.ping;
-
-// Define cache to hold notified events
-const NOTIFIED_CACHE = new LRU({
-	max: 200,
-	ttl: 1000 * 60 * 60,
-	allowStale: false,
-	updateAgeOnGet: false,
-	updateAgeOnHas: false,
-});
 
 /**
  * @summary Check if the event is ready to be notified
@@ -52,12 +47,18 @@ function readyToNotify(event: calendar_v3.Schema$Event): boolean {
  * @param event - event to check
  * @returns true if the event should be notified
  */
-function shouldNotify(event: calendar_v3.Schema$Event): boolean {
-	return (
-		!NOTIFIED_CACHE.has(event.id) &&
-		!ignore.includes(event.summary) &&
-		readyToNotify(event)
-	);
+function shouldNotify(
+	context: WorkerContext,
+	event: calendar_v3.Schema$Event,
+): boolean {
+	if (event.id) {
+		return (
+			!wasNotified(context, event.id) &&
+			!ignore.includes(event.summary) &&
+			readyToNotify(event)
+		);
+	}
+	return false;
 }
 
 /**
@@ -99,11 +100,11 @@ const handler: ActionDefinition['handler'] = async (
 	});
 	if (events && events.length > 0) {
 		for (const event of events) {
-			if (shouldNotify(event)) {
-				if (!event.start) {
+			if (shouldNotify(context, event)) {
+				if (!event.start || !event.id) {
 					continue;
 				}
-				NOTIFIED_CACHE.set(event.id, true);
+				await createNotification({ actor: hubot }, context, event.id);
 				const timeSummary = moment(
 					event.start.dateTime || event.start.date,
 				).fromNow();

@@ -1,9 +1,74 @@
 import type { LogContext } from '@balena/jellyfish-logger';
 import type { WorkerContext } from '@balena/jellyfish-worker';
-import type { TypeContract, UserContract } from 'autumndb';
+import type { AutumnDBSession, TypeContract, UserContract } from 'autumndb';
 import { google, calendar_v3 } from 'googleapis';
+import { strict as assert } from 'assert';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { v4 as uuid } from 'uuid';
+
+export async function wasNotified(
+	context: WorkerContext,
+	event: string,
+	type?: string,
+): Promise<boolean> {
+	const query: any = {
+		type: 'object',
+		required: ['type', 'data'],
+		properties: {
+			type: {
+				const: 'hubot-notification@1.0.0',
+			},
+			data: {
+				type: 'object',
+				required: ['event'],
+				properties: {
+					event: {
+						const: event,
+					},
+				},
+			},
+		},
+	};
+	if (type) {
+		query.properties.data.properties.type = {
+			const: type,
+		};
+		query.properties.data.required = ['event', 'type'];
+	}
+	const match = await context.query(context.privilegedSession, query);
+	return match.length > 0;
+}
+
+export async function createNotification(
+	session: AutumnDBSession,
+	context: WorkerContext,
+	event: string,
+	type?: string,
+): Promise<void> {
+	const hubotNotification = context.cards['hubot-notification@1.0.0'];
+	assert(hubotNotification, 'hubot-notification type not found');
+
+	await context.insertCard(
+		session,
+		hubotNotification as TypeContract,
+		{
+			attachEvents: false,
+		},
+		{
+			type: hubotNotification.type,
+			slug: `hubot-notification-${uuid()}`,
+			data: type
+				? {
+						event,
+						type,
+				  }
+				: {
+						event,
+				  },
+		},
+	);
+}
 
 export async function createWhisper(
 	logContext: LogContext,
