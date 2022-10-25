@@ -1,13 +1,12 @@
-import { defaultEnvironment } from '@balena/jellyfish-environment';
 import { testUtils as wTestUtils } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
 import { testUtils as aTestUtils } from 'autumndb';
 import * as moment from 'moment';
-import * as nock from 'nock';
+import * as sinon from 'sinon';
 import { hubotPlugin } from '../../../lib';
+import * as utils from '../../../lib/actions/utils';
 
 let ctx: wTestUtils.TestContext;
-const env = defaultEnvironment.hubot.support;
 
 beforeAll(async () => {
 	ctx = await wTestUtils.newContext({
@@ -16,16 +15,17 @@ beforeAll(async () => {
 });
 
 afterAll(() => {
-	nock.cleanAll();
+	sinon.restore();
 	return wTestUtils.destroyContext(ctx);
 });
 
-test('Should returns expected list of users on support', async () => {
-	nock('https://www.googleapis.com')
-		.persist()
-		.post('/oauth2/v4/token')
-		.reply(200, {});
+function stub(items: any[]): void {
+	sinon.stub(utils, 'fetchCalendarEvents').callsFake(async () => {
+		return items;
+	});
+}
 
+test('Should return expected list of users on support', async () => {
 	// Prepare necessary contracts
 	const [hubot, balenaOrg, userFoo, userBar, userBuz, userBaz] =
 		await Promise.all([
@@ -69,13 +69,8 @@ test('Should returns expected list of users on support', async () => {
 		}),
 	);
 
-	// Nock Google API
-	nock('https://www.googleapis.com')
-		.get(`/calendar/v3/calendars/${env.calendar}/events`)
-		.query(true)
-		.reply(200, []);
-
 	// Request list of users currently on support
+	stub([]);
 	const thread = await ctx.createContract(
 		userBaz.id,
 		{ actor: userBaz },
@@ -132,35 +127,30 @@ test('Should returns expected list of users on support', async () => {
 	});
 
 	// Mock response to simulate users with support shifts
-	nock('https://www.googleapis.com')
-		.persist()
-		.get(`/calendar/v3/calendars/${env.calendar}/events`)
-		.query(true)
-		.reply(200, {
-			kind: 'calendar#events',
-			items: ['foo', 'bar', 'buz'].map((name) => {
-				return {
-					summary: `@${name} on support`,
-					start: {
-						dateTime:
-							name === 'buz'
-								? moment().add(1, 'days').format()
-								: moment().subtract(1, 'hours').format(),
-					},
-					end: {
-						dateTime:
-							name === 'buz'
-								? moment().add(1, 'days').add(1, 'hours').format()
-								: moment().add(1, 'hours').format(),
-					},
-					attendees: [
-						{
-							email: `${name}@balena.io`,
-						},
-					],
-				};
-			}),
-		});
+	const items = ['foo', 'bar', 'buz'].map((name) => {
+		return {
+			summary: `@${name} on support`,
+			start: {
+				dateTime:
+					name === 'buz'
+						? moment().add(1, 'days').format()
+						: moment().subtract(1, 'hours').format(),
+			},
+			end: {
+				dateTime:
+					name === 'buz'
+						? moment().add(1, 'days').add(1, 'hours').format()
+						: moment().add(1, 'hours').format(),
+			},
+			attendees: [
+				{
+					email: `${name}@balena.io`,
+				},
+			],
+		};
+	});
+	sinon.restore();
+	stub(items);
 
 	// Request list of users currently on support
 	await ctx.createEvent(

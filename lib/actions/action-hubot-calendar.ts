@@ -47,16 +47,13 @@ function readyToNotify(event: calendar_v3.Schema$Event): boolean {
  * @param event - event to check
  * @returns true if the event should be notified
  */
-function shouldNotify(
+async function shouldNotify(
 	context: WorkerContext,
 	event: calendar_v3.Schema$Event,
-): boolean {
+): Promise<boolean> {
 	if (event.id) {
-		return (
-			!wasNotified(context, event.id) &&
-			!ignore.includes(event.summary) &&
-			readyToNotify(event)
-		);
+		const notified = await wasNotified(context, event.id);
+		return !notified && !ignore.includes(event.summary) && readyToNotify(event);
 	}
 	return false;
 }
@@ -100,7 +97,8 @@ const handler: ActionDefinition['handler'] = async (
 	});
 	if (events && events.length > 0) {
 		for (const event of events) {
-			if (shouldNotify(context, event)) {
+			const notify = await shouldNotify(context, event);
+			if (notify) {
 				if (!event.start || !event.id) {
 					continue;
 				}
