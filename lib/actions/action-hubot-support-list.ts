@@ -114,8 +114,11 @@ export async function makeListMessage(
 
 	const output: string[] = [];
 	for (const slot of slots) {
-		const verb = slot.start.isBefore() ? 'ending' : 'starting';
-		output.push(`${slot.summary}, ${verb} in ${slot.end.fromNow(true)}.`);
+		if (slot.start.isAfter()) {
+			output.push(`${slot.summary}, starting in ${slot.start.fromNow(true)}.`);
+		} else {
+			output.push(`${slot.summary}, ending in ${slot.end.fromNow(true)}.`);
+		}
 	}
 	const results = output.join('\r\n').split('@').join('');
 	if (results.trim().length > 0) {
