@@ -1,4 +1,18 @@
 - commits:
+    - subject: "CI: Replace nock with sinon"
+      hash: 2a3dab543818175fb855597d104d36b0898fce4d
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.14.3
+  title: ""
+  date: 2022-10-27T06:12:43.846Z
+- commits:
     - subject: Fix support list time calculation
       hash: f44897cfa48905400abd0b88aacb4eedc1dae506
       body: ""
