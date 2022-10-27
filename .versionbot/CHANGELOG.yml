@@ -1,4 +1,18 @@
 - commits:
+    - subject: Fix support list time calculation
+      hash: f44897cfa48905400abd0b88aacb4eedc1dae506
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Josh Bowling <josh@monarci.com>
+        signed-off-by: Josh Bowling <josh@monarci.com>
+      author: Josh Bowling
+      nested: []
+  version: 0.14.2
+  title: ""
+  date: 2022-10-27T05:34:10.810Z
+- commits:
     - subject: Await notified check, use sinon for tests
       hash: a8a0fa63d10d1d65b3c524f6af5c6e4988138ecf
       body: ""

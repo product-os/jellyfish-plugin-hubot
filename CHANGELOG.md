@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.14.2 - 2022-10-27
+
+* Fix support list time calculation [Josh Bowling]
+
 ## 0.14.1 - 2022-10-25
 
 * Await notified check, use sinon for tests [Josh Bowling]
