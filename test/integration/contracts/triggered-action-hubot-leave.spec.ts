@@ -1,13 +1,12 @@
-import { defaultEnvironment } from '@balena/jellyfish-environment';
 import { testUtils as wTestUtils } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
 import { testUtils as aTestUtils } from 'autumndb';
-import * as nock from 'nock';
+import * as sinon from 'sinon';
 import { createUser } from './utils';
 import { hubotPlugin } from '../../../lib';
+import { Calamari, Leave } from '../../../lib/calamari';
 
 let ctx: wTestUtils.TestContext;
-const env = defaultEnvironment.hubot.leave;
 
 beforeAll(async () => {
 	ctx = await wTestUtils.newContext({
@@ -16,45 +15,31 @@ beforeAll(async () => {
 });
 
 afterEach(() => {
-	nock.cleanAll();
+	sinon.restore();
 });
 
 afterAll(() => {
 	return wTestUtils.destroyContext(ctx);
 });
 
-function nockCalamari(today: string, leave?: any) {
-	nock.cleanAll();
-	nock(`https://${env.calamari.instance}.calamari.io`)
-		.persist()
-		.post('/api/leave/request/v1/find')
-		.reply(
-			200,
-			leave
-				? leave
-				: [
-						{
-							id: 1234,
-							from: today,
-							to: today,
-							absenceTypeName: 'Leave',
-							absenceTypeId: 13,
-							absenceCategory: 'TIMEOFF',
-							status: 'ACCEPTED',
-							entitlementAmount: 8,
-							reason: null,
-							amountFirstDay: null,
-							amountLastDay: null,
-							entitlementAmountUnit: 'DAYS',
-							created: '2022-08-09T01:32:43+0000',
-							updated: '2022-08-09T01:32:43+0000',
-							fullDayRequest: true,
-							startTime: `${today}T00:00:00`,
-							endTime: `${today}T23:59:59`,
-							timeZone: 'UTC',
-						},
-				  ],
-		);
+function stub(emails: string[]) {
+	sinon.restore();
+
+	const today = new Date().toISOString().split('T')[0];
+	sinon.stub(Calamari.prototype, 'getLeaveFromCalamari').callsFake(async () => {
+		const leaves: Leave[] = [];
+		for (const email of emails) {
+			leaves.push({
+				email,
+				from: today,
+				to: today,
+				status: 'ACCEPTED',
+				firstDayHalf: false,
+				lastDayHalf: false,
+			});
+		}
+		return leaves;
+	});
 }
 
 test('responds when people are on leave', async () => {
@@ -97,7 +82,7 @@ test('responds when people are on leave', async () => {
 	);
 
 	// Test when no one is on leave
-	nockCalamari(new Date().toISOString().split('T')[0], []);
+	stub([]);
 	await ctx.createEvent(
 		userFoo.id,
 		{ actor: userFoo },
@@ -147,7 +132,7 @@ test('responds when people are on leave', async () => {
 			},
 		],
 	);
-	nockCalamari(new Date().toISOString().split('T')[0]);
+	stub([`${userBar.slug.replace(/^user-/, '')}@balena.io`]);
 	await ctx.createEvent(
 		userFoo.id,
 		{ actor: userFoo },
