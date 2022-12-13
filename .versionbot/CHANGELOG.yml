@@ -1,4 +1,16 @@
 - commits:
+    - subject: "CI: Remove renovate config"
+      hash: 6faf5986eed3a3ff376e10c5929496905ae47266
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Josh Bowling
+      nested: []
+  version: 0.14.4
+  title: ""
+  date: 2022-12-13T02:39:48.652Z
+- commits:
     - subject: "CI: Replace nock with sinon"
       hash: 2a3dab543818175fb855597d104d36b0898fce4d
       body: ""
