@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.16.0 - 2022-12-19
+
+* Update Node.js to v19 [Renovate Bot]
+
 ## 0.15.0 - 2022-12-14
 
 * Update Node.js to 18.12.1 [Renovate Bot]
