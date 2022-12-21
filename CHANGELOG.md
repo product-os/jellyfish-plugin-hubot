@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.16.1 - 2022-12-21
+
+* Update dependency @types/uuid to 9.0.0 [Renovate Bot]
+
 ## 0.16.0 - 2022-12-19
 
 * Update Node.js to v19 [Renovate Bot]
