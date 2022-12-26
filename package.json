@@ -55,7 +55,7 @@
     "autumndb": "^22.2.165",
     "axios": "^0.27.2",
     "chrono-node": "^2.4.1",
-    "googleapis": "^108.0.0",
+    "googleapis": "^110.0.0",
     "js-base64": "^3.7.2",
     "lru-cache": "^7.14.0",
     "moment": "^2.29.4",
