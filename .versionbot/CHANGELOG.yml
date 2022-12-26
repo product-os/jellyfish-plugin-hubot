@@ -1,4 +1,19 @@
 - commits:
+    - subject: Update dependency googleapis to 110.0.0
+      hash: 177d5d42b0f525e7248c6e60e829367c96ba2349
+      body: |
+        Update googleapis to 110.0.0
+
+        Update googleapis from 108.0.1 to 110.0.0
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Renovate Bot
+      nested: []
+  version: 0.18.0
+  title: ""
+  date: 2022-12-26T02:22:02.415Z
+- commits:
     - subject: Pin dependencies
       hash: 0ee1fe94e419ce9c93d28072480a47071e18d5f4
       body: |
