@@ -1,4 +1,19 @@
 - commits:
+    - subject: Update dependency sinon to 15.0.1
+      hash: d31a9412ce3c51eea523c44490d4487d211c026a
+      body: |
+        Update sinon to 15.0.1
+
+        Update sinon from 14.0.2 to 15.0.1
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Renovate Bot
+      nested: []
+  version: 0.18.1
+  title: ""
+  date: 2022-12-27T03:47:53.964Z
+- commits:
     - subject: Update dependency googleapis to 110.0.0
       hash: 177d5d42b0f525e7248c6e60e829367c96ba2349
       body: |

@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.18.1 - 2022-12-27
+
+* Update dependency sinon to 15.0.1 [Renovate Bot]
+
 ## 0.18.0 - 2022-12-26
 
 * Update dependency googleapis to 110.0.0 [Renovate Bot]
