@@ -1,4 +1,19 @@
 - commits:
+    - subject: Update dependency axios to 1.2.1
+      hash: c25f9f01bed9173ce549a943f1c38647a7a3f61d
+      body: |
+        Update axios to 1.2.1
+
+        Update axios from 0.27.2 to 1.2.1
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Renovate Bot
+      nested: []
+  version: 0.19.0
+  title: ""
+  date: 2022-12-31T12:32:16.760Z
+- commits:
     - subject: Update dependency sinon to 15.0.1
       hash: d31a9412ce3c51eea523c44490d4487d211c026a
       body: |
