@@ -5,7 +5,7 @@ import { google, calendar_v3 } from 'googleapis';
 import { strict as assert } from 'assert';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'node:crypto';
 
 export async function wasNotified(
 	context: WorkerContext,
@@ -57,7 +57,7 @@ export async function createNotification(
 		},
 		{
 			type: hubotNotification.type,
-			slug: `hubot-notification-${uuid()}`,
+			slug: `hubot-notification-${randomUUID()}`,
 			data: type
 				? {
 						event,

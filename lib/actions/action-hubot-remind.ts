@@ -4,7 +4,7 @@ import { strict as assert } from 'assert';
 import type { TypeContract, UserContract } from 'autumndb';
 import * as chrono from 'chrono-node';
 import * as _ from 'lodash';
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'node:crypto';
 import { createWhisper } from './utils';
 
 const logger = getLogger(__filename);
@@ -56,7 +56,7 @@ export async function scheduleReminder(
 				arguments: {
 					reason: null,
 					properties: {
-						slug: `scheduled-action-${uuid()}`,
+						slug: `scheduled-action-${randomUUID()}`,
 						version: '1.0.0',
 						data: {
 							options: {

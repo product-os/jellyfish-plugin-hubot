@@ -6,8 +6,8 @@ import * as retry from 'async-retry';
 import type { TypeContract, UserContract } from 'autumndb';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { randomUUID } from 'node:crypto';
 import * as nodemailer from 'nodemailer';
-import { v4 as uuid } from 'uuid';
 import { createWhisper } from './utils';
 
 const logger = getLogger(__filename);
@@ -75,7 +75,7 @@ ${footer}
 `;
 
 		// Identify emails with a partial UUID
-		const id = uuid().split('-')[1];
+		const id = randomUUID().split('-')[1];
 
 		// Send email to team member, using message first line as subject
 		const mailSubject = messageText
