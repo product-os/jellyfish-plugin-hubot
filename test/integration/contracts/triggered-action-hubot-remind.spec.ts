@@ -1,6 +1,6 @@
 import { testUtils as wTestUtils } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'node:crypto';
 import { hubotPlugin } from '../../../lib';
 
 let ctx: wTestUtils.TestContext;
@@ -39,7 +39,7 @@ test('reminders are created', async () => {
 		user.id,
 		{ actor: user },
 		'thread@1.0.0',
-		uuid(),
+		randomUUID(),
 		{},
 	);
 	await ctx.createEvent(

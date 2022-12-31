@@ -2,7 +2,7 @@ import type { ActionDefinition } from '@balena/jellyfish-worker';
 import { strict as assert } from 'assert';
 import type { TypeContract, UserContract } from 'autumndb';
 import * as _ from 'lodash';
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'node:crypto';
 import { createWhisper } from './utils';
 
 interface Map<T> {
@@ -120,7 +120,7 @@ const handler: ActionDefinition['handler'] = async (
 				attachEvents: false,
 			},
 			{
-				slug: `brainstorm-topic-${uuid()}`,
+				slug: `brainstorm-topic-${randomUUID()}`,
 				name: firstLine,
 				loop: `loop-${category.split(' ')[0]}@1.0.0`,
 				type: brainstormTopic.slug,
