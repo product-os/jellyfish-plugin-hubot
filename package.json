@@ -1,7 +1,7 @@
 {
   "name": "@balena/jellyfish-plugin-hubot",
   "description": "Hubot Jellyfish Plugin",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/product-os/jellyfish-plugin-hubot.git"
@@ -88,6 +88,6 @@
     "pre-commit": "npx lint-staged"
   },
   "versionist": {
-    "publishedAt": "2023-01-04T08:52:36.124Z"
+    "publishedAt": "2023-01-06T01:03:13.207Z"
   }
 }
