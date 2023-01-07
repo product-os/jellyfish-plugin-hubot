@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.23.0 - 2023-01-07
+
+* Update Node.js to 18.13.0 [Renovate Bot]
+
 ## 0.22.0 - 2023-01-06
 
 * Update actions/checkout digest to ac59398 [Renovate Bot]
