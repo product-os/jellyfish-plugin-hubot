@@ -1,4 +1,19 @@
 - commits:
+    - subject: Update dependency string-strip-html to 13.0.6
+      hash: 4d9ff1cfea409c5b3e4ed26008329f8d165332c1
+      body: |
+        Update string-strip-html to 13.0.6
+
+        Update string-strip-html from 8.4.0 to 13.0.6
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Renovate Bot
+      nested: []
+  version: 0.24.0
+  title: ""
+  date: 2023-01-07T01:08:33.810Z
+- commits:
     - subject: Update Node.js to 18.13.0
       hash: 99c56875f7329126410be6c1dbc5700c70141334
       body: |

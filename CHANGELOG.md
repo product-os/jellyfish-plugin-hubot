@@ -4,6 +4,10 @@
 
 ## 0.1.1 - 2022-09-22
 
+## 0.24.0 - 2023-01-07
+
+* Update dependency string-strip-html to 13.0.6 [Renovate Bot]
+
 ## 0.23.0 - 2023-01-07
 
 * Update Node.js to 18.13.0 [Renovate Bot]
