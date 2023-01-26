@@ -61,7 +61,7 @@
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.37",
     "nodemailer": "^6.7.8",
-    "string-strip-html": "^8.3.0",
+    "string-strip-html": "^13.0.0",
     "typed-error": "^3.2.1"
   },
   "devDependencies": {
